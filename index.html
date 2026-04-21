@@ -1,9 +1,15 @@
-<html lang="ko"><head>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#1A0414">
 <title>탑비주얼 — 최상위 1%, 아름다움의 정점을 만나는 곳</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&amp;family=Playfair+Display:ital,wght@0,700;1,700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
 <style>
 :root {
   --pink:        #E8527A;
@@ -18,7 +24,7 @@
 }
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
-body{font-family:'Noto Sans KR',sans-serif;color:var(--text);background:#fff;overflow-x:hidden;}
+body{font-family:'Noto Sans KR',sans-serif;color:var(--text);background:#fff;overflow-x:hidden;-webkit-tap-highlight-color:transparent;-webkit-overflow-scrolling:touch;}
 
 /* NAV */
 nav{
@@ -342,7 +348,12 @@ footer{background:var(--dark);padding:40px 48px 28px;display:flex;flex-direction
 .reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease;}
 .reveal.visible{opacity:1;transform:none;}
 
-/* RESPONSIVE */
+/* 모바일에서 JS 실패 시 무조건 보이게 */
+@media(max-width:900px){
+  .reveal{opacity:0;transform:translateY(16px);}
+}
+
+/* RESPONSIVE - Mobile Optimized */
 @media(max-width:900px){
   nav{padding:0 20px;}
   .nav-links{display:none;}
@@ -357,6 +368,134 @@ footer{background:var(--dark);padding:40px 48px 28px;display:flex;flex-direction
   .proc-steps::before{display:none;}
   footer{padding:32px 24px;}
   .ft-links{justify-content:flex-start;}
+}
+
+/* MOBILE SPECIFIC */
+@media(max-width:480px){
+  /* NAV */
+  nav{height:52px;padding:0 16px;}
+  .nav-logo{font-size:14px;}
+  .nav-logo img{height:22px!important;}
+  .nav-btn{padding:7px 16px;font-size:12px;}
+
+  /* HERO */
+  .hero{padding-top:52px;}
+  .hero-left{padding:68px 18px 20px;}
+  .hero-badge{font-size:10px;padding:4px 11px;margin-bottom:16px;}
+  .hero-en{font-size:11px;letter-spacing:.25em;}
+  .hero-kr{font-size:clamp(38px,11vw,56px);letter-spacing:-1.5px;margin-bottom:12px;}
+  .hero-sub{font-size:13px;line-height:1.65;margin-bottom:26px;}
+  .hero-btns{gap:9px;}
+  .btn-main,.btn-ghost{padding:11px 22px;font-size:13px;}
+
+  /* HERO CARDS */
+  .hero-right{padding:0 18px 16px;}
+  .cards-scene{max-width:290px;height:340px;gap:10px;}
+  .diamond-badge{width:72px;height:72px;}
+  .diamond-badge strong{font-size:19px;}
+  .diamond-badge p{font-size:6px;}
+  .vc-badge{font-size:8px;padding:2px 7px;}
+
+  /* HERO STATS */
+  .hero-stats{gap:28px;padding:0 18px 36px;flex-wrap:wrap;justify-content:center;}
+  .stat-val{font-size:20px;}
+  .stat-lbl{font-size:9px;}
+
+  /* SECTION COMMON */
+  .sec{padding:52px 18px;}
+  .sec-lbl{font-size:9px;letter-spacing:.18em;}
+  .sec-title{font-size:clamp(22px,6vw,30px);letter-spacing:-.5px;margin-bottom:10px;}
+  .sec-desc{font-size:13px;}
+
+  /* WHY */
+  .why-grid{gap:18px;margin-bottom:36px;}
+  .why-quote{padding:24px 20px;}
+  .why-quote::before{font-size:54px;top:8px;left:16px;}
+  .why-quote p{font-size:13.5px;line-height:1.75;}
+  .why-cards{grid-template-columns:1fr;gap:12px;}
+  .wc{padding:22px 18px;}
+  .wc-icon{width:38px;height:38px;font-size:17px;margin-bottom:12px;}
+  .wc h3{font-size:14px;margin-bottom:6px;}
+  .wc p{font-size:12px;}
+
+  /* SERVICE */
+  .svc-grid{gap:16px;}
+  .mc{padding:24px 18px;}
+  .mc h3{font-size:17px;margin-bottom:8px;}
+  .mc>p{font-size:13px;margin-bottom:18px;}
+  .mc-badge{font-size:10px;padding:4px 11px;margin-bottom:14px;}
+  .bi{font-size:12px;}
+  .bi-dot{width:16px;height:16px;font-size:8px;}
+
+  /* PRICING */
+  .price-row{gap:16px;margin-bottom:28px;}
+  .pc{padding:24px 18px;}
+  .pc-price{font-size:36px;letter-spacing:-1.5px;}
+  .pc-unit{font-size:14px;}
+  .pc-note{font-size:12px;margin-bottom:18px;}
+  .pf{font-size:12px;}
+  .refund-box{padding:22px 16px;}
+  .refund-box h3{font-size:15px;margin-bottom:5px;}
+  .refund-box>p{font-size:12px;margin-bottom:16px;}
+  .rt th{font-size:10px;padding:0 0 8px;}
+  .rt td{font-size:12px;padding:9px 0;}
+  .rpct{font-size:11px;padding:2px 8px;}
+
+  /* PROCESS */
+  .proc-steps{grid-template-columns:1fr;gap:24px;margin-top:36px;}
+  .proc-steps::before{display:none;}
+  .ps{padding:0;align-items:flex-start;text-align:left;flex-direction:row;gap:14px;}
+  .ps-num{width:44px;height:44px;font-size:15px;flex-shrink:0;margin-bottom:0;}
+  .ps-day{font-size:9px;margin-bottom:4px;}
+  .ps-title{font-size:13px;margin-bottom:4px;}
+  .ps-desc{font-size:12px;}
+
+  /* FAQ */
+  .faq-list{margin-top:28px;}
+  .fq{font-size:13.5px;padding:18px 0;}
+  .fq .fi-icon{font-size:15px;}
+  .fa{font-size:13px;}
+
+  /* CTA */
+  .cta-sec{padding:72px 18px;}
+  .cta-title{font-size:clamp(24px,7vw,36px);letter-spacing:-1px;margin-bottom:14px;}
+  .cta-desc{font-size:13px;margin-bottom:32px;}
+  .cta-btns{gap:10px;}
+  .cta-live{font-size:10px;margin-top:16px;}
+
+  /* APPLY */
+  .apply-grid{gap:28px;}
+  .apply-info h2{font-size:24px;}
+  .apply-info>p{font-size:13px;margin-bottom:20px;}
+  .apply-types{gap:10px;}
+  .at{padding:12px 14px;gap:10px;border-radius:11px;}
+  .at-icon{font-size:17px;}
+  .at-text h4{font-size:12px;}
+  .at-text p{font-size:11px;}
+  .form-card{padding:24px 16px;}
+  .form-card h3{font-size:16px;margin-bottom:18px;}
+  .fg{margin-bottom:12px;}
+  .fg label{font-size:11px;margin-bottom:5px;}
+  .fg select,.fg input{padding:10px 12px;font-size:13px;border-radius:9px;}
+  .fg-row{grid-template-columns:1fr 1fr;gap:9px;}
+  .submit-btn{padding:13px;font-size:14px;}
+  .form-notice{font-size:10px;}
+
+  /* FOOTER */
+  footer{padding:28px 18px 20px;}
+  .ft-logo{font-size:13px;}
+  .ft-logo img{height:20px!important;}
+  .ft-copy{font-size:10.5px!important;line-height:1.9!important;}
+  .ft-links{gap:14px;margin-top:20px;padding-top:16px;flex-wrap:wrap;}
+  .ft-links a{font-size:11px;}
+}
+
+@media(max-width:360px){
+  .hero-kr{font-size:36px;}
+  .cards-scene{max-width:260px;height:310px;}
+  .hero-stats{gap:20px;}
+  .stat-val{font-size:18px;}
+  .fg-row{grid-template-columns:1fr;}
 }
 </style>
 </head>
@@ -537,14 +676,14 @@ footer{background:var(--dark);padding:40px 48px 28px;display:flex;flex-direction
       <h3>🔄 스마트 환불 시스템</h3>
       <p>소개팅 서비스는 인간의 감정이 언제든 변할 수 있다는 특성을 고려합니다. 단순 변심일지라도 고객님이 원하실 때 언제든지 환불이 가능합니다.</p>
       <table class="rt">
-        <tbody><tr><th>시점</th><th>환불률</th></tr>
+        <tr><th>시점</th><th>환불률</th></tr>
         <tr><td>매칭 연결 전</td><td><span class="rpct" style="background:#e8f5e9;color:#2e7d32">100% 환불</span></td></tr>
         <tr><td>매칭 후 3시간 이내</td><td><span class="rpct" style="background:#e8f5e9;color:#2e7d32">90% 환불</span></td></tr>
         <tr><td>소개팅 1일차</td><td><span class="rpct" style="background:#e3f2fd;color:#1565c0">80% 환불</span></td></tr>
         <tr><td>소개팅 2일차</td><td><span class="rpct" style="background:#fff3e0;color:#e65100">55% 환불</span></td></tr>
         <tr><td>소개팅 3일차</td><td><span class="rpct" style="background:#fce4ec;color:#b71c1c">30% 환불</span></td></tr>
         <tr><td>결정의 날 (4일차)</td><td><span class="rpct" style="background:#f5f5f5;color:#757575">환불 불가</span></td></tr>
-      </tbody></table>
+      </table>
     </div>
   </div>
 </section>
@@ -656,9 +795,23 @@ function toggleFaq(btn){
 }
 const io=new IntersectionObserver(entries=>{
   entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
-},{threshold:.1});
+},{threshold:0,rootMargin:'0px 0px -10px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+// 모바일 폴백: 페이지 로드 시 viewport 안에 있는 요소 즉시 표시
+function checkVisible(){
+  document.querySelectorAll('.reveal:not(.visible)').forEach(el=>{
+    const rect=el.getBoundingClientRect();
+    if(rect.top < window.innerHeight + 50){
+      el.classList.add('visible');
+    }
+  });
+}
+window.addEventListener('scroll',checkVisible,{passive:true});
+window.addEventListener('load',checkVisible);
+window.addEventListener('DOMContentLoaded',checkVisible);
+setTimeout(checkVisible, 100);
+setTimeout(checkVisible, 500);
 </script>
-
-
-</body></html>
+</body>
+</html>
