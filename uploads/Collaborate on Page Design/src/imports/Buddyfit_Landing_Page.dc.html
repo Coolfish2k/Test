@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>
+body{margin:0;font-family:'Noto Sans KR',sans-serif}
+a{color:#f46375;text-decoration:none}
+a:hover{color:#d8465a}
+@keyframes bf-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+@keyframes bf-pulse{0%,100%{box-shadow:0 0 0 0 rgba(244,99,117,.32)}50%{box-shadow:0 0 0 12px rgba(244,99,117,0)}}
+</style>
+</helmet>
+
+<div style="background:#faf8f5;color:#2b2b2b;position:relative;isolation:isolate">
+
+<div style="position:fixed;top:0;left:0;height:3px;width:{{ scrollProgress }}%;background:linear-gradient(90deg,#f46375,#f9a3ae);z-index:9999;transition:width .1s linear"></div>
+
+<div style="{{ headerStyle }}">
+<div style="font-size:21px;font-weight:900;letter-spacing:-0.5px">buddy<span style="color:#f46375">fit</span></div>
+<div style="padding:11px 24px;border-radius:30px;background:#f46375;color:#fff;font-size:14px;font-weight:700;transition:all .25s ease;cursor:pointer" style-hover="background:#d8465a;transform:translateY(-1px);box-shadow:0 6px 16px rgba(244,99,117,.35)">무료 상담 신청</div>
+</div>
+
+<div style="display:flex;flex-wrap:wrap-reverse;align-items:center;gap:32px;max-width:1200px;margin:0 auto;padding:16px clamp(20px,5vw,64px) 64px">
+<div style="flex:1 1 340px;min-width:260px">
+<div style="display:inline-block;padding:7px 16px;border-radius:20px;background:#fdeef0;color:#d8465a;font-size:13px;font-weight:700;margin-bottom:20px">남성 전문 소개팅</div>
+<div style="font-size:clamp(30px,4.2vw,46px);font-weight:900;line-height:1.35;margin-bottom:20px">여자 사람 친구가<br>알려주는 <span style="color:#f46375">진짜 연애</span></div>
+<div style="font-size:16px;color:#767676;line-height:1.75;margin-bottom:30px">소개부터 대화, 스타일, 이성에게 보이는 이미지까지<br>여성의 시선에서 솔직하고 현실적인 조언을 드립니다.</div>
+<div style="display:flex;gap:12px;flex-wrap:wrap">
+<div style="padding:15px 30px;border-radius:30px;background:#f46375;color:#fff;font-size:15px;font-weight:700;transition:all .25s ease;cursor:pointer" style-hover="background:#d8465a;transform:translateY(-2px);box-shadow:0 10px 24px rgba(244,99,117,.35)">무료 상담 신청하기</div>
+<div style="padding:15px 30px;border-radius:30px;border:2px solid #2b2b2b;color:#2b2b2b;font-size:15px;font-weight:700;transition:all .25s ease;cursor:pointer" style-hover="background:#2b2b2b;color:#fff">버디핏 더 알아보기</div>
+</div>
+</div>
+<div style="flex:1 1 340px;min-width:260px">
+<image-slot id="hero" shape="rounded" radius="24" placeholder="히어로 이미지 (매니저+회원 컷)" style="width:100%;height:380px;box-shadow:0 20px 50px rgba(43,43,43,.12)"></image-slot>
+</div>
+</div>
+
+<div ref="{{ quoteRef }}" style="{{ quoteStyle }}">
+<div style="max-width:720px;margin:0 auto;font-size:clamp(17px,2vw,21px);font-weight:700;line-height:1.65">"매니저가 아닌, 진짜 이성 친구처럼 —<br>여성의 시선으로 당신의 연애를 함께 고민합니다"</div>
+</div>
+
+<div ref="{{ experienceRef }}" style="{{ experienceStyle }}">
+<div style="max-width:1080px;margin:0 auto">
+<div style="text-align:center;font-size:13px;font-weight:700;color:#f46375;letter-spacing:1.5px;margin-bottom:12px">TRY IT YOURSELF</div>
+<div style="text-align:center;font-size:clamp(24px,3vw,32px);font-weight:900;margin-bottom:14px">버디핏을 직접 경험해보세요</div>
+<div style="text-align:center;font-size:15px;color:#767676;margin-bottom:52px">마음에 드는 매니저를 선택하고, 대화를 미리 체험해보세요</div>
+
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:28px;margin-bottom:60px">
+<sc-for list="{{ team }}" as="m" hint-placeholder-count="4">
+<div style="perspective:900px">
+<div style="{{ m.tiltStyle }}" onMouseMove="{{ m.onMove }}" onMouseLeave="{{ m.onLeave }}" onClick="{{ m.onClickCard }}">
+<div style="{{ m.flipStyle }}">
+<div style="position:absolute;inset:0;backface-visibility:hidden;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#fff;border:1px solid #f3e9e9;border-radius:20px;padding:20px;box-shadow:0 8px 24px rgba(43,43,43,.06)">
+<div style="{{ m.glowStyle }}"></div>
+<div style="width:90px;height:90px;border-radius:50%;overflow:hidden;margin-bottom:14px">
+<image-slot id="{{ m.id }}" shape="circle" placeholder="사진" style="width:100%;height:100%"></image-slot>
+</div>
+<div style="font-size:15px;font-weight:700;margin-bottom:3px">{{ m.name }}</div>
+<div style="font-size:13px;color:#999">{{ m.role }}</div>
+</div>
+<div style="position:absolute;inset:0;backface-visibility:hidden;overflow:hidden;transform:rotateY(180deg);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:#fdeef0;border:1px solid #f9d7dd;border-radius:20px;padding:22px 20px">
+<div style="{{ m.glowStyle }}"></div>
+<div style="font-size:13.5px;color:#555;line-height:1.7;margin-bottom:12px">{{ m.bio }}</div>
+<div style="font-size:11px;color:#c9707e">{{ m.hintBack }}</div>
+</div>
+</div>
+</div>
+</div>
+</sc-for>
+</div>
+
+<div style="display:flex;gap:40px;flex-wrap:wrap;justify-content:center;align-items:flex-start">
+
+<div style="flex:1 1 300px;max-width:340px;display:flex;flex-direction:column;align-items:center">
+<div style="position:relative;width:250px;height:230px">
+<sc-for list="{{ swipe.cards }}" as="c" hint-placeholder-count="4">
+<div style="{{ c.style }}" onPointerDown="{{ c.onDown }}" onPointerMove="{{ c.onMove }}" onPointerUp="{{ c.onUp }}" onPointerLeave="{{ c.onUp }}">
+<div style="width:44px;height:44px;border-radius:12px;background:{{ c.color }};margin-bottom:16px"></div>
+<div style="font-size:15.5px;font-weight:700;margin-bottom:8px;text-align:center">{{ c.title }}</div>
+<div style="font-size:12.5px;color:#767676;text-align:center;line-height:1.6">{{ c.desc }}</div>
+</div>
+</sc-for>
+<sc-if value="{{ swipe.hasExiting }}" hint-placeholder-val="{{ false }}">
+<div style="{{ swipe.exitingStyle }}">
+<div style="width:44px;height:44px;border-radius:12px;background:{{ swipe.exitingCard.color }};margin-bottom:16px"></div>
+<div style="font-size:15.5px;font-weight:700;margin-bottom:8px;text-align:center">{{ swipe.exitingCard.title }}</div>
+<div style="font-size:12.5px;color:#767676;text-align:center;line-height:1.6">{{ swipe.exitingCard.desc }}</div>
+</div>
+</sc-if>
+</div>
+<div style="font-size:12px;color:#aaa;margin-top:18px">← 카드를 밀어서 특징을 넘겨보세요 →</div>
+</div>
+
+<div style="flex:1 1 300px;max-width:340px;background:#fff;border:1px solid #f0eae8;border-radius:20px;padding:22px;display:flex;flex-direction:column;gap:10px;min-height:280px;box-shadow:0 8px 24px rgba(43,43,43,.06)">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:2px">
+<div style="display:flex;align-items:center;gap:8px">
+<sc-if value="{{ chat.hasSelection }}" hint-placeholder-val="{{ false }}">
+<image-slot id="{{ chat.managerImgId }}" shape="circle" placeholder="사진" style="width:26px;height:26px"></image-slot>
+</sc-if>
+<div style="font-size:12px;color:#c9a9ae">{{ chat.headerText }}</div>
+</div>
+<sc-if value="{{ chat.hasSelection }}" hint-placeholder-val="{{ false }}">
+<div style="font-size:11.5px;color:#f46375;cursor:pointer;padding:4px 10px;border:1px solid #f9d7dd;border-radius:12px;transition:background .2s ease" style-hover="background:#fdeef0" onClick="{{ chat.onReset }}">↺ 다시보기</div>
+</sc-if>
+</div>
+<sc-if value="{{ chat.hasSelection }}" hint-placeholder-val="{{ false }}">
+<div style="font-size:11.5px;color:#aaa;line-height:1.5;margin-bottom:6px">선택한 매니저가 직접 작성한 대화예시입니다. 분위기를 느껴보세요.</div>
+</sc-if>
+<sc-if value="{{ chat.showPlaceholder }}" hint-placeholder-val="{{ true }}">
+<div style="flex:1;display:flex;align-items:center;justify-content:center;text-align:center;color:#c9b8bc;font-size:13px;line-height:1.6;padding:30px 10px">← 매니저 카드를 클릭하면<br>대화를 미리볼 수 있어요</div>
+</sc-if>
+<sc-if value="{{ chat.showMsg1 }}" hint-placeholder-val="{{ false }}">
+<div style="align-self:flex-end;max-width:82%;background:#f46375;color:#fff;padding:11px 15px;border-radius:16px 16px 4px 16px;font-size:13.5px;line-height:1.5">소개팅 잘하고 싶은데 뭐부터 해야 할지 모르겠어요</div>
+</sc-if>
+<sc-if value="{{ chat.showMsg2 }}" hint-placeholder-val="{{ false }}">
+<div style="align-self:flex-start;max-width:82%;background:#f2f2f2;color:#2b2b2b;padding:11px 15px;border-radius:16px 16px 16px 4px;font-size:13.5px;line-height:1.5">그 마음이 제일 중요해요. 우선 첫인상부터 같이 점검해볼까요?</div>
+</sc-if>
+<sc-if value="{{ chat.showChips }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:4px">
+<sc-for list="{{ chat.chips }}" as="c" hint-placeholder-count="3">
+<div style="{{ c.style }}" onClick="{{ c.onClick }}">{{ c.label }}</div>
+</sc-for>
+</div>
+</sc-if>
+<sc-if value="{{ chat.showReply }}" hint-placeholder-val="{{ false }}">
+<div style="align-self:flex-start;max-width:82%;background:#f2f2f2;color:#2b2b2b;padding:11px 15px;border-radius:16px 16px 16px 4px;font-size:13.5px;line-height:1.5">{{ chat.replyText }}</div>
+</sc-if>
+</div>
+
+</div>
+</div>
+</div>
+
+<div style="max-width:900px;margin:0 auto;padding:76px clamp(20px,5vw,64px) 40px">
+<div style="text-align:center;font-size:13px;font-weight:700;color:#f46375;letter-spacing:1.5px;margin-bottom:12px">WHY BUDDYFIT</div>
+<div style="text-align:center;font-size:clamp(24px,3vw,32px);font-weight:900;margin-bottom:60px">버디핏의 특징</div>
+
+<sc-for list="{{ features }}" as="f" hint-placeholder-count="6">
+<div ref="{{ f.ref }}" style="{{ f.rowStyle }}" style-hover="{{ f.hoverStyle }}">
+<div style="width:52px;height:52px;flex:none;border-radius:16px;display:flex;align-items:center;justify-content:center;transition:transform .3s ease;background:{{ f.iconBg }}">
+<sc-if value="{{ f.isUser }}" hint-placeholder-val="{{ false }}"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.2"></circle><path d="M5.5 19c1.2-3.5 3.8-5 6.5-5s5.3 1.5 6.5 5"></path></svg></sc-if>
+<sc-if value="{{ f.isChat }}" hint-placeholder-val="{{ false }}"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12c0-3.9 3.6-7 8-7s8 3.1 8 7-3.6 7-8 7c-1 0-2-.15-2.9-.45L5 20l1-3.6C4.7 15.1 4 13.6 4 12z"></path></svg></sc-if>
+<sc-if value="{{ f.isGroup }}" hint-placeholder-val="{{ false }}"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="8.5" cy="9.5" r="2.6"></circle><circle cx="15.5" cy="9.5" r="2.6"></circle><path d="M3 19c.8-2.7 2.6-4.1 5.5-4.1s4.7 1.4 5.5 4.1"></path><path d="M10 19c.8-2.7 2.6-4.1 5.5-4.1s4.7 1.4 5.5 4.1"></path></svg></sc-if>
+<sc-if value="{{ f.isEye }}" hint-placeholder-val="{{ false }}"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6z"></path><circle cx="12" cy="12" r="2.6"></circle></svg></sc-if>
+<sc-if value="{{ f.isAdvice }}" hint-placeholder-val="{{ false }}"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v10H8l-4 4V5z"></path><path d="M8 9h8M8 12h5"></path></svg></sc-if>
+<sc-if value="{{ f.isHeart }}" hint-placeholder-val="{{ false }}"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.5-9.3-9C1.2 8 2.5 5 5.7 5c1.9 0 3.4 1 4.3 2.4C11 6 12.5 5 14.4 5c3.2 0 4.5 3 3 6-2.3 4.5-9.4 9-9.4 9z"></path></svg></sc-if>
+</div>
+<div style="flex:1 1 260px;text-align:{{ f.textAlign }}"><div style="font-size:18px;font-weight:700;margin-bottom:6px">{{ f.title }}</div><div style="font-size:14.5px;color:#767676;line-height:1.6">{{ f.desc }}</div></div>
+</div>
+</sc-for>
+
+</div>
+
+<div ref="{{ testimonialsRef }}" style="{{ testimonialsStyle }}">
+<div style="max-width:1080px;margin:0 auto">
+<div style="text-align:center;font-size:13px;font-weight:700;color:#f46375;letter-spacing:1.5px;margin-bottom:12px">REAL STORIES</div>
+<div style="text-align:center;font-size:clamp(24px,3vw,32px);font-weight:900;margin-bottom:16px">실제 후기</div>
+<div style="text-align:center;font-size:13.5px;color:#aaa;margin-bottom:52px">더 많은 이야기가 준비되어 있어요</div>
+<div style="display:flex;gap:22px;flex-wrap:wrap;justify-content:center">
+<sc-for list="{{ testimonials }}" as="t" hint-placeholder-count="3">
+<div style="flex:1 1 280px;max-width:320px;background:#fdfaf8;border:1px solid #f3e9e9;border-radius:20px;overflow:hidden">
+<image-slot id="review-{{ $index }}" shape="rect" placeholder="사진" style="width:100%;height:170px"></image-slot>
+<div style="padding:24px">
+<div style="color:#f46375;font-size:14px;letter-spacing:2px;margin-bottom:14px">★★★★★</div>
+<div style="font-size:13.5px;color:#555;line-height:1.75;margin-bottom:20px">{{ t.quote }}</div>
+<div style="font-size:12.5px;color:#999;border-top:1px solid #eee;padding-top:14px">{{ t.author }}</div>
+</div>
+</div>
+</sc-for>
+</div>
+
+</div>
+
+<div style="position:relative;height:110px;overflow:hidden;margin-top:56px;width:100vw;left:50%;margin-left:-50vw">
+<sc-for list="{{ pileCards }}" as="p" hint-placeholder-count="6">
+<div style="{{ p.style }}">
+<image-slot id="{{ p.id }}" shape="rect" placeholder="사진" style="width:100%;height:100%"></image-slot>
+</div>
+</sc-for>
+</div>
+
+</div>
+
+<div style="padding:76px clamp(20px,5vw,64px);background:#faf8f5">
+<div style="max-width:1020px;margin:0 auto">
+<div style="text-align:center;font-size:13px;font-weight:700;color:#f46375;letter-spacing:1.5px;margin-bottom:12px">MEMBERSHIP</div>
+<div style="text-align:center;font-size:clamp(24px,3vw,32px);font-weight:900;margin-bottom:52px">가격 / 멤버십 안내</div>
+<div style="display:flex;gap:22px;flex-wrap:wrap;justify-content:center">
+
+<div ref="{{ p1Ref }}" style="{{ p1Style }}" style-hover="transform:translateY(-8px);box-shadow:0 16px 36px rgba(43,43,43,.1)">
+<div style="font-size:16px;font-weight:700;margin-bottom:8px">라이트</div>
+<div style="font-size:28px;font-weight:900;margin-bottom:20px">가격 자리</div>
+<div style="font-size:13.5px;color:#767676;line-height:2">구성 항목 자리<br>구성 항목 자리<br>구성 항목 자리</div>
+</div>
+
+<div ref="{{ p2Ref }}" style="{{ p2Style }}" style-hover="transform:translateY(-10px) scale(1.02);box-shadow:0 20px 44px rgba(244,99,117,.28)">
+<div style="position:absolute;top:-14px;left:28px;background:#f46375;color:#fff;font-size:12px;font-weight:700;padding:5px 14px;border-radius:20px">추천</div>
+<div style="font-size:16px;font-weight:700;margin-bottom:8px;color:#f46375">스탠다드</div>
+<div style="font-size:28px;font-weight:900;margin-bottom:20px">가격 자리</div>
+<div style="font-size:13.5px;color:#767676;line-height:2">구성 항목 자리<br>구성 항목 자리<br>구성 항목 자리<br>구성 항목 자리</div>
+</div>
+
+<div ref="{{ p3Ref }}" style="{{ p3Style }}" style-hover="transform:translateY(-8px);box-shadow:0 16px 36px rgba(43,43,43,.1)">
+<div style="font-size:16px;font-weight:700;margin-bottom:8px">프리미엄</div>
+<div style="font-size:28px;font-weight:900;margin-bottom:20px">가격 자리</div>
+<div style="font-size:13.5px;color:#767676;line-height:2">구성 항목 자리<br>구성 항목 자리<br>구성 항목 자리<br>구성 항목 자리<br>구성 항목 자리</div>
+</div>
+
+</div>
+</div>
+</div>
+
+<div ref="{{ faqRef }}" style="{{ faqStyle }}">
+<div style="max-width:720px;margin:0 auto">
+<div style="text-align:center;font-size:13px;font-weight:700;color:#f46375;letter-spacing:1.5px;margin-bottom:12px">FAQ</div>
+<div style="text-align:center;font-size:clamp(24px,3vw,32px);font-weight:900;margin-bottom:44px">자주 묻는 질문</div>
+<sc-for list="{{ faqs }}" as="f" hint-placeholder-count="4">
+<div style="border-bottom:1px solid #eee">
+<div style="padding:20px 4px;cursor:pointer;border-radius:10px;transition:background .2s ease" style-hover="background:#fdf9f8" onClick="{{ f.onClick }}">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:16px">
+<div style="font-size:15.5px;font-weight:700">{{ f.q }}</div>
+<div style="{{ f.markStyle }}">+</div>
+</div>
+</div>
+<div style="{{ f.contentStyle }}">
+<div style="overflow:hidden">
+<div style="font-size:14.5px;color:#767676;line-height:1.7;padding:0 4px 20px 4px;padding-right:30px">{{ f.a }}</div>
+</div>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div ref="{{ ctaRef }}" style="{{ ctaStyle }}">
+<div style="font-size:clamp(24px,3.4vw,34px);font-weight:900;margin-bottom:16px">지금, 여자 사람 친구에게 물어보세요</div>
+<div style="font-size:15px;color:#bbb;margin-bottom:32px">첫 상담은 무료입니다. 부담 없이 시작해보세요.</div>
+<div style="display:inline-block;padding:16px 36px;border-radius:30px;background:#f46375;color:#fff;font-size:16px;font-weight:700;cursor:pointer;transition:all .25s ease;animation:bf-pulse 2.6s ease-in-out infinite" style-hover="background:#d8465a;transform:translateY(-2px) scale(1.03);animation:none">무료 상담 신청하기</div>
+</div>
+
+<div style="padding:26px;text-align:center;font-size:12px;color:#999">© buddyfit. All rights reserved.</div>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {
+    openIndex: -1, revealed: {}, headerScrolled: false, scrollProgress: 0, tilt: {}, selectedManagerId: null,
+    chatStage: 0, chatChoice: null, swipeOrder: [0, 1, 2, 3], dragX: 0, dragging: false, exiting: null,
+    cardGlow: {}
+  };
+  revealRefs = {};
+
+  handleTiltMove(id) {
+    return (e) => {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const px = e.clientX - rect.left;
+      const py = e.clientY - rect.top;
+      const nx = px / rect.width;
+      const ny = py / rect.height;
+      this.setState((s) => ({
+        tilt: { ...s.tilt, [id]: { rx: (0.5 - ny) * 14, ry: (nx - 0.5) * 14 } },
+        cardGlow: { ...s.cardGlow, [id]: { x: px, y: py, active: true } }
+      }));
+    };
+  }
+  handleTiltLeave(id) {
+    return () => this.setState((s) => ({
+      tilt: { ...s.tilt, [id]: { rx: 0, ry: 0 } },
+      cardGlow: { ...s.cardGlow, [id]: { x: -999, y: -999, active: false } }
+    }));
+  }
+  handleSelectManager(id) {
+    return () => {
+      const wasSelected = this.state.selectedManagerId === id;
+      this.setState({ selectedManagerId: wasSelected ? null : id });
+      if (wasSelected) {
+        (this.chatTimers || []).forEach(clearTimeout);
+        this.setState({ chatStage: 0, chatChoice: null });
+      } else {
+        this.restartChat();
+      }
+    };
+  }
+
+  restartChat() {
+    (this.chatTimers || []).forEach(clearTimeout);
+    this.setState({ chatStage: 0, chatChoice: null });
+    this.chatTimers = [
+      setTimeout(() => this.setState({ chatStage: 1 }), 500),
+      setTimeout(() => this.setState({ chatStage: 2 }), 1500),
+      setTimeout(() => this.setState({ chatStage: 3 }), 2500)
+    ];
+  }
+
+  finishSwipe() {
+    const dx = this.state.dragX;
+    if (Math.abs(dx) <= 80) { this.setState({ dragX: 0, dragging: false }); return; }
+    const dir = dx > 0 ? 1 : -1;
+    const exitId = this.state.swipeOrder[0];
+    this.setState((s) => {
+      const [first, ...rest] = s.swipeOrder;
+      return { swipeOrder: [...rest, first], dragging: false, dragX: 0, exiting: { id: exitId, x: dx, dir, flying: false } };
+    });
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      this.setState((s) => (s.exiting && s.exiting.id === exitId ? { exiting: { ...s.exiting, x: dir * 480, flying: true } } : null));
+    }));
+    clearTimeout(this._exitTimer);
+    this._exitTimer = setTimeout(() => {
+      this.setState((s) => (s.exiting && s.exiting.id === exitId ? { exiting: null } : null));
+    }, 380);
+  }
+
+  observeEl(k) {
+    const el = this.revealRefs[k];
+    if (el && this.io) { el.__revealIdx = k; this.io.observe(el); }
+  }
+
+  componentDidMount() {
+    this.io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          const idx = e.target.__revealIdx;
+          this.setState((s) => ({ revealed: { ...s.revealed, [idx]: true } }));
+          this.io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    Object.keys(this.revealRefs).forEach((k) => this.observeEl(k));
+
+    // safety net: never leave content permanently hidden if observer misses something
+    this.fallbackTimer = setTimeout(() => {
+      const all = {};
+      for (let i = 0; i <= 14; i++) all[i] = true;
+      this.setState((s) => ({ revealed: { ...all, ...s.revealed } }));
+    }, 2500);
+
+    this.onScroll = () => {
+      const y = window.scrollY;
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      this.setState({
+        headerScrolled: y > 10,
+        scrollProgress: max > 0 ? Math.min(100, (y / max) * 100) : 0
+      });
+    };
+    window.addEventListener('scroll', this.onScroll, { passive: true });
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.onScroll);
+    if (this.io) this.io.disconnect();
+    if (this.fallbackTimer) clearTimeout(this.fallbackTimer);
+    (this.chatTimers || []).forEach(clearTimeout);
+  }
+
+  mkReveal(i, delayMs) {
+    const revealed = !!this.state.revealed[i];
+    return {
+      ref: (el) => { if (el) { this.revealRefs[i] = el; this.observeEl(i); } },
+      opacity: revealed ? 1 : 0,
+      transform: revealed ? 'translateY(0)' : 'translateY(28px)',
+      transitionDelay: (delayMs || 0) + 'ms'
+    };
+  }
+
+  renderVals() {
+    const st = this.state;
+
+    const featureDefs = [
+      { title: '남성만을 위한 전문 소개팅', desc: '남성 회원의 연애에 집중해 설계된 남성 전용 서비스입니다.', color: '#f46375', icon: 'user' },
+      { title: '매니저가 아닌 여자 사람 친구', desc: '형식적인 상담이 아니라, 진짜 연애를 도와주는 가까운 이성 친구처럼 함께합니다.', color: '#f9a3ae', icon: 'chat' },
+      { title: '여성들이 직접 운영하는 소개 시스템', desc: '소개 매니저부터 여성 회원을 발굴하는 전담팀까지 오직 여성 전문가들로 구성되어 있습니다.', color: '#f46375', icon: 'group' },
+      { title: '여성의 눈으로 검증한 매력적인 여성', desc: '외모뿐 아니라 분위기와 매력까지 종합적으로 검토해 직접 발굴하고 캐스팅합니다.', color: '#f9a3ae', icon: 'eye' },
+      { title: '여성의 시선으로 제공하는 현실적인 조언', desc: '스타일, 대화 방식, 첫인상 등 남성이 놓치기 쉬운 부분을 솔직하게 알려드립니다.', color: '#f46375', icon: 'advice' },
+      { title: '매력적인 여성 매니저와 함께하는 친근한 관리', desc: '딱딱한 상담원이 아닌, 편안하게 연애 고민을 나눌 수 있는 매력적인 매니저가 함께합니다.', color: '#f9a3ae', icon: 'heart' }
+    ];
+    const features = featureDefs.map((f, i) => {
+      const idx = i + 1;
+      const reversed = i % 2 === 1;
+      const r = this.mkReveal(idx, (i % 2) * 60);
+      return {
+        num: i + 1,
+        title: f.title,
+        desc: f.desc,
+        iconBg: f.color,
+        isUser: f.icon === 'user',
+        isChat: f.icon === 'chat',
+        isGroup: f.icon === 'group',
+        isEye: f.icon === 'eye',
+        isAdvice: f.icon === 'advice',
+        isHeart: f.icon === 'heart',
+        textAlign: reversed ? 'right' : 'left',
+        ref: r.ref,
+        hoverStyle: 'background:#fdfaf8;transform:translateX(' + (reversed ? '-4px' : '4px') + ')',
+        rowStyle: {
+          display: 'flex', flexDirection: reversed ? 'row-reverse' : 'row', alignItems: 'center',
+          gap: '28px', flexWrap: 'wrap', padding: '28px 12px', borderRadius: '14px',
+          borderBottom: i < 5 ? '1px solid #eee' : 'none',
+          transition: 'opacity .6s ease, transform .6s ease, background .3s ease',
+          opacity: r.opacity, transform: r.transform, transitionDelay: r.transitionDelay
+        }
+      };
+    });
+
+    const teamDefs = [
+      { id: 'mgr1', name: 'O O 매니저', role: '소개 매니저', bio: '이 매니저의 한 줄 소개가 들어갈 자리입니다.' },
+      { id: 'mgr2', name: 'O O 매니저', role: '소개 매니저', bio: '이 매니저의 한 줄 소개가 들어갈 자리입니다.' },
+      { id: 'mgr3', name: 'O O 팀장', role: '발굴팀', bio: '이 팀장의 한 줄 소개가 들어갈 자리입니다.' },
+      { id: 'mgr4', name: 'O O 매니저', role: '서비스팀', bio: '이 매니저의 한 줄 소개가 들어갈 자리입니다.' }
+    ];
+    const team = teamDefs.map((t) => {
+      const tilt = st.tilt[t.id] || { rx: 0, ry: 0 };
+      const flipped = st.selectedManagerId === t.id;
+      const glow = st.cardGlow[t.id] || { x: -999, y: -999, active: false };
+      return {
+        ...t,
+        hintBack: '← 탭하여 선택 해제',
+        onMove: this.handleTiltMove(t.id),
+        onLeave: this.handleTiltLeave(t.id),
+        onClickCard: this.handleSelectManager(t.id),
+        tiltStyle: { transformStyle: 'preserve-3d', transform: `rotateX(${tilt.rx}deg) rotateY(${tilt.ry}deg)`, transition: 'transform .15s ease-out', cursor: 'pointer' },
+        flipStyle: { position: 'relative', width: '100%', height: '260px', transformStyle: 'preserve-3d', transition: 'transform .6s cubic-bezier(.4,.2,.2,1)', transform: flipped ? 'rotateY(180deg)' : 'rotateY(0deg)' },
+        glowStyle: {
+          position: 'absolute', inset: 0, pointerEvents: 'none',
+          background: `radial-gradient(circle 150px at ${glow.x}px ${glow.y}px, rgba(244,99,117,.10), transparent 70%)`,
+          opacity: glow.active ? 1 : 0, transition: 'opacity .3s ease'
+        }
+      };
+    });
+
+    const quote = this.mkReveal(0);
+    const experienceR = this.mkReveal(7);
+    const testimonialsR = this.mkReveal(14);
+    const p1 = this.mkReveal(8);
+    const p2 = this.mkReveal(9, 100);
+    const p3 = this.mkReveal(10, 200);
+    const faqR = this.mkReveal(11);
+    const ctaR = this.mkReveal(12);
+    const revealTrans = 'opacity .6s ease, transform .6s ease';
+
+    // --- swipe cards ---
+    const cardDefs = [
+      { id: 0, title: '남성 전용 소개팅', desc: '남성 회원의 연애에 집중해 설계', color: '#f46375' },
+      { id: 1, title: '여성이 직접 운영', desc: '매니저·발굴팀 전원 여성 전문가', color: '#f9a3ae' },
+      { id: 2, title: '현실적인 조언', desc: '스타일·대화·첫인상까지 솔직하게', color: '#f46375' },
+      { id: 3, title: '친근한 매니저 관리', desc: '편하게 연애 고민 나누는 사이', color: '#f9a3ae' }
+    ];
+    const byId = Object.fromEntries(cardDefs.map((c) => [c.id, c]));
+    const dragX = st.dragX;
+    const swipeCards = st.swipeOrder.slice(0, 3).map((id, pos2) => {
+      const def = byId[id];
+      const isTop = pos2 === 0;
+      const base = {
+        position: 'absolute', inset: 0, background: '#fff', border: '1px solid #f0eae8', borderRadius: '18px',
+        boxShadow: '0 12px 28px rgba(43,43,43,.1)', display: 'flex', flexDirection: 'column', alignItems: 'center',
+        justifyContent: 'center', padding: '20px', cursor: isTop ? 'grab' : 'default',
+        transition: 'none',
+        zIndex: 10 - pos2,
+        transform: isTop
+          ? `translateX(${dragX}px) translateY(0) rotate(${dragX / 18}deg) scale(1)`
+          : `translateY(${pos2 * 10}px) scale(${1 - pos2 * 0.05})`,
+        opacity: isTop ? 1 : 1 - pos2 * 0.15
+      };
+      return {
+        ...def,
+        style: base,
+        onDown: isTop ? (e) => { this._sx = e.clientX; this.setState({ dragging: true }); } : undefined,
+        onMove: isTop ? (e) => { if (this.state.dragging) this.setState({ dragX: e.clientX - this._sx }); } : undefined,
+        onUp: isTop ? () => this.finishSwipe() : undefined
+      };
+    });
+    const exiting = st.exiting;
+    const swipe = {
+      cards: swipeCards,
+      hasExiting: !!exiting,
+      exitingCard: exiting ? byId[exiting.id] : null,
+      exitingStyle: exiting ? {
+        position: 'absolute', inset: 0, background: '#fff', border: '1px solid #f0eae8', borderRadius: '18px',
+        boxShadow: '0 12px 28px rgba(43,43,43,.1)', display: 'flex', flexDirection: 'column', alignItems: 'center',
+        justifyContent: 'center', padding: '20px', zIndex: 20, pointerEvents: 'none',
+        transition: exiting.flying ? 'transform .35s ease, opacity .35s ease' : 'none',
+        transform: `translateX(${exiting.x}px) rotate(${exiting.x / 18}deg)`,
+        opacity: exiting.flying ? 0 : 1
+      } : null
+    };
+
+    // --- chat demo ---
+    const chipDefs = [
+      { label: '코디가 걱정돼요', reply: '과하지 않게, 깔끔한 인상을 주는 코디부터 같이 봐드릴게요.' },
+      { label: '대화가 어려워요', reply: '자연스러운 대화 흐름은 연습으로 충분히 늘어요. 예시부터 드려볼게요.' },
+      { label: '제 매력을 모르겠어요', reply: '본인은 못 보는 매력, 여성의 시선으로 솔직하게 짚어드릴게요.' }
+    ];
+    const chosen = st.chatChoice;
+    const selectedManager = st.selectedManagerId ? teamDefs.find((t) => t.id === st.selectedManagerId) : null;
+    const chat = {
+      hasSelection: !!selectedManager,
+      showPlaceholder: !selectedManager,
+      managerImgId: selectedManager ? selectedManager.id : '',
+      headerText: selectedManager ? `${selectedManager.name}와의 대화 미리보기` : '여자 사람 친구와의 대화 미리보기',
+      showMsg1: !!selectedManager && st.chatStage >= 1,
+      showMsg2: !!selectedManager && st.chatStage >= 2,
+      showChips: !!selectedManager && st.chatStage >= 3 && !chosen,
+      showReply: !!selectedManager && !!chosen,
+      replyText: chosen ? chosen.reply : '',
+      onReset: () => this.restartChat(),
+      chips: chipDefs.map((c) => ({
+        label: c.label,
+        style: 'padding:9px 14px;border:1px solid #f46375;color:#f46375;border-radius:20px;font-size:12.5px;cursor:pointer;transition:all .2s ease',
+        onClick: () => this.setState({ chatChoice: c })
+      }))
+    };
+
+    const items = [
+      { q: '상담은 어떻게 진행되나요?', a: '답변 텍스트가 들어갈 자리입니다.' },
+      { q: '비용은 얼마인가요?', a: '답변 텍스트가 들어갈 자리입니다.' },
+      { q: '매칭까지 얼마나 걸리나요?', a: '답변 텍스트가 들어갈 자리입니다.' },
+      { q: '꼭 오프라인에서 만나야 하나요?', a: '답변 텍스트가 들어갈 자리입니다.' }
+    ];
+    const openIndex = st.openIndex;
+    const faqs = items.map((it, i) => ({
+      ...it,
+      contentStyle: { maxHeight: i === openIndex ? '240px' : '0px', overflow: 'hidden', opacity: i === openIndex ? 1 : 0, transition: 'max-height .35s ease, opacity .25s ease' },
+      markStyle: { display: 'inline-block', fontSize: '18px', color: '#f46375', fontWeight: 700, transition: 'transform .3s ease', transform: i === openIndex ? 'rotate(45deg)' : 'rotate(0deg)' },
+      onClick: () => this.setState((s) => ({ openIndex: s.openIndex === i ? -1 : i }))
+    }));
+
+    return {
+      scrollProgress: st.scrollProgress,
+      headerStyle: {
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '16px', flexWrap: 'wrap',
+        maxWidth: '1200px', margin: '0 auto', position: 'sticky', top: 0, zIndex: 50, transition: 'all .3s ease',
+        padding: st.headerScrolled ? '14px clamp(20px,5vw,64px)' : '22px clamp(20px,5vw,64px)',
+        background: st.headerScrolled ? 'rgba(250,248,245,0.85)' : '#faf8f5',
+        backdropFilter: st.headerScrolled ? 'blur(10px)' : 'none',
+        boxShadow: st.headerScrolled ? '0 4px 24px rgba(0,0,0,.06)' : 'none'
+      },
+      features,
+      team,
+      quoteRef: quote.ref,
+      quoteStyle: { background: '#fdeef0', padding: '48px clamp(20px,5vw,64px)', textAlign: 'center', transition: revealTrans, opacity: quote.opacity, transform: quote.transform },
+      swipe,
+      chat,
+      experienceRef: experienceR.ref,
+      experienceStyle: { background: '#faf8f5', padding: '76px clamp(20px,5vw,64px)', transition: revealTrans, opacity: experienceR.opacity, transform: experienceR.transform },
+      testimonials: [
+        { quote: '후기 텍스트가 들어갈 자리입니다. 실제 회원분의 생생한 경험담이 여기에 표시됩니다.', author: '김OO · 32세' },
+        { quote: '후기 텍스트가 들어갈 자리입니다. 실제 회원분의 생생한 경험담이 여기에 표시됩니다.', author: '이OO · 29세' },
+        { quote: '후기 텍스트가 들어갈 자리입니다. 실제 회원분의 생생한 경험담이 여기에 표시됩니다.', author: '박OO · 35세' }
+      ],
+      pileCards: [
+        { left: '-2%', bottom: '-95px', rotate: -8, w: 190, h: 140, bg: '#fdfaf8', border: '#f0dfe1' },
+        { left: '8%', bottom: '-135px', rotate: 6, w: 175, h: 132, bg: '#fdeef0', border: '#f6c9d1' },
+        { left: '18%', bottom: '-100px', rotate: -5, w: 185, h: 138, bg: '#ffffff', border: '#e6e0dd' },
+        { left: '28%', bottom: '-140px', rotate: 8, w: 180, h: 134, bg: '#fdfaf8', border: '#f0dfe1' },
+        { left: '38%', bottom: '-108px', rotate: -10, w: 190, h: 140, bg: '#fdeef0', border: '#f6c9d1' },
+        { left: '48%', bottom: '-125px', rotate: 5, w: 178, h: 133, bg: '#ffffff', border: '#e6e0dd' },
+        { left: '58%', bottom: '-92px', rotate: -7, w: 188, h: 138, bg: '#fdfaf8', border: '#f0dfe1' },
+        { left: '68%', bottom: '-130px', rotate: 9, w: 182, h: 135, bg: '#fdeef0', border: '#f6c9d1' },
+        { left: '78%', bottom: '-102px', rotate: -4, w: 185, h: 138, bg: '#ffffff', border: '#e6e0dd' },
+        { left: '87%', bottom: '-138px', rotate: 7, w: 178, h: 132, bg: '#fdfaf8', border: '#f0dfe1' },
+        { left: '96%', bottom: '-98px', rotate: -6, w: 185, h: 136, bg: '#fdeef0', border: '#f6c9d1' }
+      ].map((p, i) => ({
+        id: 'pile-' + i,
+        style: {
+          position: 'absolute', left: p.left, bottom: p.bottom, width: p.w + 'px', height: p.h + 'px',
+          background: p.bg, border: `1px solid ${p.border}`, borderRadius: '12px', overflow: 'hidden',
+          boxShadow: '0 10px 20px rgba(43,43,43,.08)', transform: `rotate(${p.rotate}deg)`
+        }
+      })),
+      testimonialsRef: testimonialsR.ref,
+      testimonialsStyle: { background: '#ffffff', padding: '76px clamp(20px,5vw,64px)', transition: revealTrans, opacity: testimonialsR.opacity, transform: testimonialsR.transform },
+      p1Ref: p1.ref,
+      p1Style: { flex: '1 1 260px', maxWidth: '320px', background: '#fff', border: '1px solid #eee', borderRadius: '20px', padding: '34px 28px', transition: 'opacity .6s ease, transform .3s ease, box-shadow .3s ease', opacity: p1.opacity, transform: p1.transform, transitionDelay: p1.transitionDelay },
+      p2Ref: p2.ref,
+      p2Style: { flex: '1 1 260px', maxWidth: '320px', background: '#fff', border: '2px solid #f46375', borderRadius: '20px', padding: '34px 28px', position: 'relative', transition: 'opacity .6s ease, transform .3s ease, box-shadow .3s ease', opacity: p2.opacity, transform: p2.transform, transitionDelay: p2.transitionDelay },
+      p3Ref: p3.ref,
+      p3Style: { flex: '1 1 260px', maxWidth: '320px', background: '#fff', border: '1px solid #eee', borderRadius: '20px', padding: '34px 28px', transition: 'opacity .6s ease, transform .3s ease, box-shadow .3s ease', opacity: p3.opacity, transform: p3.transform, transitionDelay: p3.transitionDelay },
+      faqRef: faqR.ref,
+      faqStyle: { padding: '76px clamp(20px,5vw,64px)', transition: revealTrans, opacity: faqR.opacity, transform: faqR.transform },
+      faqs,
+      ctaRef: ctaR.ref,
+      ctaStyle: { background: '#2b2b2b', color: '#fff', textAlign: 'center', padding: '88px clamp(20px,5vw,64px)', transition: revealTrans, opacity: ctaR.opacity, transform: ctaR.transform }
+    };
+  }
+}
+
+</script>
+</body>
+</html>
