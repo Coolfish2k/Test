@@ -635,7 +635,7 @@ class Component extends DCLogic {
       showPlaceholder: !selectedManager,
       managerImgId: selectedManager ? selectedManager.id : 'chat-empty',
       headerName: selectedManager ? selectedManager.name : 'buddyfit',
-      headerSub: selectedManager ? `${selectedManager.role} · 온라인` : '매니저를 선택해주세요',
+      headerSub: selectedManager ? `${selectedManager.role} · 선택한 매니저가 직접 작성한 대화입니다.` : '매니저를 선택해주세요',
       now,
       showMsg1: !!selectedManager && st.chatStage >= 1,
       showTyping: !!selectedManager && st.chatTyping,
