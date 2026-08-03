@@ -18,6 +18,7 @@ a:hover{color:#d8465a}
 @keyframes bf-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
 @keyframes bf-pulse{0%,100%{box-shadow:0 0 0 0 rgba(244,99,117,.32)}50%{box-shadow:0 0 0 12px rgba(244,99,117,0)}}
 @keyframes bf-typing-dot{0%,60%,100%{transform:translateY(0);opacity:.5}30%{transform:translateY(-4px);opacity:1}}
+@keyframes bf-bounce-up{0%,100%{transform:translateY(0);opacity:.6}50%{transform:translateY(-6px);opacity:1}}
 .bf-stack::-webkit-scrollbar{display:none}
 </style>
 </helmet>
@@ -68,12 +69,10 @@ a:hover{color:#d8465a}
 <image-slot id="{{ m.id }}" shape="circle" placeholder="사진" style="width:100%;height:100%"></image-slot>
 </div>
 <div style="font-size:15px;font-weight:700;margin-bottom:3px">{{ m.name }}</div>
-<div style="font-size:13px;color:#999">{{ m.role }}</div>
 </div>
 <div style="position:absolute;inset:0;backface-visibility:hidden;overflow:hidden;transform:rotateY(180deg);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:#fdeef0;border:1px solid #f9d7dd;border-radius:20px;padding:22px 20px">
 <div style="{{ m.glowStyle }}"></div>
-<div style="font-size:13.5px;color:#555;line-height:1.7;margin-bottom:12px">{{ m.bio }}</div>
-<div style="font-size:11px;color:#c9707e">{{ m.hintBack }}</div>
+<div style="font-size:13.5px;color:#555;line-height:1.7">{{ m.bio }}</div>
 </div>
 </div>
 </div>
@@ -81,7 +80,7 @@ a:hover{color:#d8465a}
 </sc-for>
 </div>
 
-<div style="display:flex;gap:40px;flex-wrap:wrap;justify-content:center;align-items:flex-start">
+<div style="display:flex;gap:40px;flex-wrap:wrap;justify-content:center;align-items:stretch">
 
 <div style="flex:1 1 300px;max-width:340px;background:#fff;border:1px solid #f3e9e9;border-radius:20px;padding:28px;display:flex;flex-direction:column;align-items:center;text-align:center;box-shadow:0 8px 24px rgba(43,43,43,.06);min-height:420px;justify-content:center">
 <sc-if value="{{ profilePane.hasSelection }}" hint-placeholder-val="{{ false }}">
@@ -89,24 +88,29 @@ a:hover{color:#d8465a}
 <div style="width:110px;height:110px;border-radius:50%;overflow:hidden;margin-bottom:16px">
 <image-slot id="{{ profilePane.id }}" shape="circle" placeholder="사진" style="width:100%;height:100%"></image-slot>
 </div>
-<div style="font-size:19px;font-weight:700;margin-bottom:4px">{{ profilePane.name }}</div>
-<div style="font-size:13px;color:#999;margin-bottom:18px">{{ profilePane.role }}</div>
-<div style="padding:8px 18px;border-radius:20px;background:#fdeef0;color:#d8465a;font-size:13px;font-weight:700">{{ profilePane.stat }}</div>
+<div style="font-size:19px;font-weight:700">{{ profilePane.name }}</div>
 </sc-if>
-<sc-if value="{{ profilePane.hasSelection }}" hint-placeholder-val="{{ true }}">
+<sc-if value="{{ profilePane.noSelection }}" hint-placeholder-val="{{ true }}">
+<div style="font-size:20px;color:#f9b8c0;margin-bottom:8px;animation:bf-bounce-up 1.6s ease-in-out infinite">↑</div>
 <div style="width:80px;height:80px;border-radius:50%;background:#fdeef0;display:flex;align-items:center;justify-content:center;margin-bottom:18px">
 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#f46375" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.2"></circle><path d="M5.5 19c1.2-3.5 3.8-5 6.5-5s5.3 1.5 6.5 5"></path></svg>
 </div>
-<div style="font-size:14.5px;color:#999;line-height:1.7">위에서 매니저를 선택하면<br>프로필이 여기에 표시돼요</div>
+<div style="font-size:14.5px;color:#767676;line-height:1.7;font-weight:500">위 매니저 카드를 클릭하고<br>대화를 미리 체험해보세요</div>
 </sc-if>
+
 </div>
 
 <div style="flex:1 1 300px;max-width:360px;background:#ece5dd;border-radius:20px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 8px 32px rgba(43,43,43,.12);min-height:420px">
 <div style="background:#f46375;padding:12px 16px;display:flex;align-items:center;gap:10px">
-<div style="position:relative;flex:none">
-<image-slot id="{{ chat.managerImgId }}" shape="circle" placeholder="" style="width:38px;height:38px"></image-slot>
+<div style="position:relative;flex:none;width:38px;height:38px">
 <sc-if value="{{ chat.hasSelection }}" hint-placeholder-val="{{ false }}">
+<image-slot id="{{ chat.managerImgId }}" shape="circle" placeholder="" style="width:38px;height:38px"></image-slot>
 <div style="position:absolute;bottom:1px;right:1px;width:10px;height:10px;border-radius:50%;background:#4ade80;border:2px solid #f46375"></div>
+</sc-if>
+<sc-if value="{{ chat.noSelection }}" hint-placeholder-val="{{ true }}">
+<div style="width:100%;height:100%;border-radius:50%;background:rgba(255,255,255,.22);display:flex;align-items:center;justify-content:center">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.2"></circle><path d="M5.5 19c1.2-3.5 3.8-5 6.5-5s5.3 1.5 6.5 5"></path></svg>
+</div>
 </sc-if>
 </div>
 <div style="flex:1;min-width:0">
@@ -127,21 +131,21 @@ a:hover{color:#d8465a}
 </sc-if>
 <sc-if value="{{ chat.showMsg1 }}" hint-placeholder-val="{{ false }}">
 <div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px">
-<div style="background:#f9e84e;color:#2b2b2b;padding:9px 13px;border-radius:16px 16px 4px 16px;font-size:13px;line-height:1.55;max-width:78%;box-shadow:0 1px 2px rgba(0,0,0,.1)">소개팅 잘하고 싶은데 뭐부터 해야 할지 모르겠어요</div>
+<div style="background:#f9e84e;color:#2b2b2b;padding:9px 13px;border-radius:4px 16px 16px 16px;font-size:13px;line-height:1.55;max-width:78%;box-shadow:0 1px 2px rgba(0,0,0,.1)">소개팅 잘하고 싶은데 뭐부터 해야 할지 모르겠어요</div>
 <div style="font-size:10px;color:#a0927e;margin-right:2px">{{ chat.now }} ✓✓</div>
 </div>
 </sc-if>
 <sc-if value="{{ chat.showTyping }}" hint-placeholder-val="{{ false }}">
 <div style="display:flex;align-items:flex-end;gap:6px">
-<image-slot id="{{ chat.managerImgId }}-typing" shape="circle" placeholder="" style="width:28px;height:28px;flex:none"></image-slot>
+<image-slot id="{{ chat.managerImgId }}" shape="circle" placeholder="" style="width:28px;height:28px;flex:none"></image-slot>
 <div style="display:flex;align-items:center;gap:4px;padding:10px 14px;background:#f0f0f0;border-radius:16px 16px 16px 4px;width:fit-content">
 <div style="{{ chat.dot0Style }}"></div><div style="{{ chat.dot1Style }}"></div><div style="{{ chat.dot2Style }}"></div>
 </div>
 </div>
 </sc-if>
 <sc-if value="{{ chat.showMsg2 }}" hint-placeholder-val="{{ false }}">
-<div style="display:flex;align-items:flex-end;gap:6px">
-<image-slot id="{{ chat.managerImgId }}-a1" shape="circle" placeholder="" style="width:28px;height:28px;flex:none"></image-slot>
+<div style="display:flex;align-items:flex-start;gap:6px">
+<image-slot id="{{ chat.managerImgId }}" shape="circle" placeholder="" style="width:28px;height:28px;flex:none"></image-slot>
 <div style="display:flex;flex-direction:column;gap:2px">
 <div style="font-size:11px;color:#7a6a5a;margin-left:2px;margin-bottom:2px">{{ chat.headerName }}</div>
 <div style="background:#fff;color:#2b2b2b;padding:9px 13px;border-radius:16px 16px 16px 4px;font-size:13px;line-height:1.55;max-width:78%;box-shadow:0 1px 2px rgba(0,0,0,.1)">그 마음이 제일 중요해요. 우선 첫인상부터 같이 점검해볼까요?</div>
@@ -158,11 +162,11 @@ a:hover{color:#d8465a}
 </sc-if>
 <sc-if value="{{ chat.showReply }}" hint-placeholder-val="{{ false }}">
 <div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px">
-<div style="background:#f9e84e;color:#2b2b2b;padding:9px 13px;border-radius:16px 16px 4px 16px;font-size:13px;line-height:1.55;max-width:78%;box-shadow:0 1px 2px rgba(0,0,0,.1)">{{ chat.choiceLabel }}</div>
+<div style="background:#f9e84e;color:#2b2b2b;padding:9px 13px;border-radius:4px 16px 16px 16px;font-size:13px;line-height:1.55;max-width:78%;box-shadow:0 1px 2px rgba(0,0,0,.1)">{{ chat.choiceLabel }}</div>
 <div style="font-size:10px;color:#a0927e;margin-right:2px">{{ chat.now }} ✓✓</div>
 </div>
-<div style="display:flex;align-items:flex-end;gap:6px">
-<image-slot id="{{ chat.managerImgId }}-a2" shape="circle" placeholder="" style="width:28px;height:28px;flex:none"></image-slot>
+<div style="display:flex;align-items:flex-start;gap:6px">
+<image-slot id="{{ chat.managerImgId }}" shape="circle" placeholder="" style="width:28px;height:28px;flex:none"></image-slot>
 <div style="display:flex;flex-direction:column;gap:2px">
 <div style="font-size:11px;color:#7a6a5a;margin-left:2px;margin-bottom:2px">{{ chat.headerName }}</div>
 <div style="background:#fff;color:#2b2b2b;padding:9px 13px;border-radius:16px 16px 16px 4px;font-size:13px;line-height:1.55;max-width:78%;box-shadow:0 1px 2px rgba(0,0,0,.1)">{{ chat.replyText }}</div>
@@ -173,7 +177,7 @@ a:hover{color:#d8465a}
 </div>
 
 <div style="background:#f0ebe3;padding:8px 10px;display:flex;align-items:center;gap:8px;border-top:1px solid rgba(0,0,0,.06)">
-<div style="flex:1;background:#fff;border-radius:20px;padding:8px 14px;font-size:13px;color:#bbb;box-shadow:0 1px 2px rgba(0,0,0,.06)">메시지를 입력하세요</div>
+<div style="flex:1;background:#fff;border-radius:20px;padding:8px 14px;font-size:13px;color:#bbb;box-shadow:0 1px 2px rgba(0,0,0,.06)">실제 상담에서는 자유롭게 대화할 수 있어요</div>
 <div style="width:36px;height:36px;border-radius:50%;background:#f46375;display:flex;align-items:center;justify-content:center;flex:none">
 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
 </div>
@@ -213,7 +217,7 @@ a:hover{color:#d8465a}
 
 <div style="{{ storyOuterStyle }}">
 <div style="perspective:900px">
-<div style="{{ storyMainStyle }}" onMouseMove="{{ storyMainOnMove }}" onMouseLeave="{{ storyMainOnLeave }}">
+<div ref="{{ storyMainRef }}" style="{{ storyMainStyle }}" onMouseMove="{{ storyMainOnMove }}" onMouseLeave="{{ storyMainOnLeave }}">
 <image-slot id="pile-img-{{ storyMain.id }}" shape="rect" placeholder="사진" style="width:66%;height:100%;flex:none"></image-slot>
 <div style="flex:1;padding:18px;display:flex;flex-direction:column;justify-content:center;min-width:0">
 <div style="color:#f46375;font-size:13px;letter-spacing:2px;margin-bottom:10px">★★★★★</div>
@@ -226,7 +230,7 @@ a:hover{color:#d8465a}
 <div style="{{ storyStackWrapStyle }}">
 <div ref="{{ storyStackRef }}" class="bf-stack" onScroll="{{ storyStackOnScroll }}" onPointerDown="{{ storyStackOnDown }}" onPointerMove="{{ storyStackOnDragMove }}" onPointerUp="{{ storyStackOnDragUp }}" onPointerLeave="{{ storyStackOnDragUp }}" style="{{ storyStackStyle }}">
 <sc-for list="{{ storyStackItems }}" as="c" hint-placeholder-count="10">
-<div ref="{{ c.itemRef }}" style="{{ c.style }}" onClick="{{ c.onClick }}">
+<div ref="{{ c.itemRef }}" data-slot-index="{{ c.idx }}" style="{{ c.style }}">
 <div style="width:100%;height:100%;border-radius:10px;overflow:hidden;background:#fdeef0;border:1px solid #f0dfe1;box-shadow:0 6px 14px rgba(43,43,43,.1);transition:transform .18s ease" style-hover="transform:scale(1.05)">
 <image-slot id="pile-img-{{ c.id }}" shape="rect" placeholder="" style="width:100%;height:100%"></image-slot>
 </div>
@@ -307,7 +311,7 @@ class Component extends DCLogic {
     openIndex: -1, revealed: {}, headerScrolled: false, scrollProgress: 0, tilt: {}, selectedManagerId: null,
     chatStage: 0, chatTyping: false, chatChoice: null,
     cardGlow: {}, iconRevealed: {}, hoveredFeatureIdx: null,
-    storyActiveId: 0, storySlotOccupant: [100, 1, 101, 102, 2, 103, 104, 105, 106, 107], storyCenterSlot: 4, storyIsMobile: false
+    storyActiveId: 0, storySlotOccupant: [100, 1, 101, 102, 2, 103, 104, 105, 106, 107], storyCenterSlot: 4, storyIsMobile: false, storyMainFading: false, storySwapFromId: null
   };
   revealRefs = {};
   pileContent = {
@@ -344,14 +348,9 @@ class Component extends DCLogic {
   }
   handleSelectManager(id) {
     return () => {
-      const wasSelected = this.state.selectedManagerId === id;
-      this.setState({ selectedManagerId: wasSelected ? null : id });
-      if (wasSelected) {
-        (this.chatTimers || []).forEach(clearTimeout);
-        this.setState({ chatStage: 0, chatChoice: null });
-      } else {
-        this.restartChat();
-      }
+      if (this.state.selectedManagerId === id) return;
+      this.setState({ selectedManagerId: id });
+      this.restartChat();
     };
   }
 
@@ -394,8 +393,28 @@ class Component extends DCLogic {
     if (isMobile) container.scrollLeft = d.startScrollLeft - delta;
     else container.scrollTop = d.startScrollTop - delta;
   }
-  handleStoryStackDragUp() {
+  handleStoryStackDragUp(e) {
+    const d = this._storyDrag;
     this._storyDrag = null;
+    // Native click after a custom drag surface is unreliable (touch browsers
+    // suppress synthesized click once the pointer moves past a small
+    // threshold, and pointer capture retargets pointer events to the
+    // container) — resolve the tap manually from the release point instead
+    // of depending on onClick ever firing.
+    if (e && e.type === 'pointerup' && d && !d.moved && typeof document.elementFromPoint === 'function') {
+      // Walk up past shadow-DOM boundaries too (image-slot's internal <img>
+      // is what elementFromPoint actually hits) — parentElement stops at a
+      // shadow root, so hop to its host and keep climbing.
+      let el = document.elementFromPoint(e.clientX, e.clientY);
+      while (el) {
+        if (el.hasAttribute && el.hasAttribute('data-slot-index')) break;
+        el = el.parentElement || (el.getRootNode && el.getRootNode().host) || null;
+      }
+      if (el) {
+        const idx = parseInt(el.getAttribute('data-slot-index'), 10);
+        if (!isNaN(idx)) this.handleStorySlotClick(idx)();
+      }
+    }
   }
 
   recalcStoryCenterSlot() {
@@ -418,13 +437,60 @@ class Component extends DCLogic {
 
   handleStorySlotClick(slotIndex) {
     return () => {
-      this.setState((s) => {
-        const storySlotOccupant = s.storySlotOccupant.slice();
-        const clickedId = storySlotOccupant[slotIndex];
-        storySlotOccupant[slotIndex] = s.storyActiveId;
-        return { storyActiveId: clickedId, storySlotOccupant };
-      });
+      if (this.state.storyMainFading) return;
+      const clickedId = this.state.storySlotOccupant[slotIndex];
+      const mainEl = this.storyMainEl;
+      const itemEl = this.storyStackItemEls[clickedId];
+      const DUR = 460;
+      if (mainEl && itemEl) {
+        const mainRect = mainEl.getBoundingClientRect();
+        const itemRect = itemEl.getBoundingClientRect();
+        const mainImg = mainEl.querySelector('image-slot');
+        const itemImg = itemEl.querySelector('image-slot');
+        const mainSrc = mainImg && mainImg.shadowRoot ? (mainImg.shadowRoot.querySelector('img') || {}).src : null;
+        const itemSrc = itemImg && itemImg.shadowRoot ? (itemImg.shadowRoot.querySelector('img') || {}).src : null;
+        this._flyCards(mainRect, itemRect, mainSrc, itemSrc, DUR);
+      }
+      clearTimeout(this._storyFadeTimer);
+      this.setState({ storyMainFading: true, storySwapFromId: clickedId });
+      this._storyFadeTimer = setTimeout(() => {
+        this.setState((s) => {
+          const storySlotOccupant = s.storySlotOccupant.slice();
+          storySlotOccupant[slotIndex] = s.storyActiveId;
+          return { storyActiveId: clickedId, storySlotOccupant, storyMainFading: false, storySwapFromId: null };
+        });
+      }, DUR);
     };
+  }
+
+  // Clones the main card and the clicked dummy as fixed-position overlays and
+  // animates them crossing to each other's rects — the real elements stay
+  // hidden (storyMainFading / storySwapFromId) until the swap lands, so the
+  // clones are the only thing visible mid-flight.
+  _flyCards(mainRect, itemRect, mainSrc, itemSrc, dur) {
+    const mk = (rect, src, radius) => {
+      const d = document.createElement('div');
+      d.style.cssText = `position:fixed;left:${rect.left}px;top:${rect.top}px;width:${rect.width}px;height:${rect.height}px;border-radius:${radius}px;overflow:hidden;z-index:9999;pointer-events:none;box-shadow:0 12px 30px rgba(43,43,43,.25);background:#fdeef0;transition:left ${dur}ms cubic-bezier(.3,.6,.3,1),top ${dur}ms cubic-bezier(.3,.6,.3,1),width ${dur}ms cubic-bezier(.3,.6,.3,1),height ${dur}ms cubic-bezier(.3,.6,.3,1),border-radius ${dur}ms ease`;
+      if (src) {
+        const img = document.createElement('img');
+        img.src = src;
+        img.style.cssText = 'width:100%;height:100%;object-fit:cover';
+        d.appendChild(img);
+      }
+      document.body.appendChild(d);
+      return d;
+    };
+    const a = mk(mainRect, mainSrc, 16);
+    const b = mk(itemRect, itemSrc, 10);
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      a.style.left = itemRect.left + 'px'; a.style.top = itemRect.top + 'px';
+      a.style.width = itemRect.width + 'px'; a.style.height = itemRect.height + 'px';
+      a.style.borderRadius = '10px';
+      b.style.left = mainRect.left + 'px'; b.style.top = mainRect.top + 'px';
+      b.style.width = mainRect.width + 'px'; b.style.height = mainRect.height + 'px';
+      b.style.borderRadius = '16px';
+    }));
+    setTimeout(() => { a.remove(); b.remove(); }, dur + 40);
   }
 
   sizeForDist(dist) {
@@ -436,10 +502,10 @@ class Component extends DCLogic {
     return st.storySlotOccupant.map((id, i) => {
       const dist = Math.abs(i - st.storyCenterSlot);
       const size = this.sizeForDist(dist);
-      const opacity = this.STORY_DIST_OPACITY[Math.min(dist, this.STORY_DIST_OPACITY.length - 1)];
+      const opacity = id === st.storySwapFromId ? 0 : this.STORY_DIST_OPACITY[Math.min(dist, this.STORY_DIST_OPACITY.length - 1)];
       return {
         id,
-        onClick: this.handleStorySlotClick(i),
+        idx: i,
         itemRef: (el) => { if (el) this.storyStackItemEls[id] = el; },
         style: {
           width: size.w + 'px', height: size.h + 'px', flex: 'none', cursor: 'pointer',
@@ -502,6 +568,7 @@ class Component extends DCLogic {
     if (this._storyMq) this._storyMq.removeEventListener('change', this._storyMqListener);
     if (this.io) this.io.disconnect();
     if (this.fallbackTimer) clearTimeout(this.fallbackTimer);
+    clearTimeout(this._storyFadeTimer);
     (this.chatTimers || []).forEach(clearTimeout);
   }
 
@@ -590,7 +657,6 @@ class Component extends DCLogic {
       const glow = st.cardGlow[t.id] || { x: -999, y: -999, active: false };
       return {
         ...t,
-        hintBack: '← 탭하여 선택 해제',
         onMove: this.handleTiltMove(t.id),
         onLeave: this.handleTiltLeave(t.id),
         onClickCard: this.handleSelectManager(t.id),
@@ -617,8 +683,8 @@ class Component extends DCLogic {
     // --- selected manager profile pane ---
     const selectedManager0 = st.selectedManagerId ? teamDefs.find((t) => t.id === st.selectedManagerId) : null;
     const profilePane = selectedManager0
-      ? { hasSelection: true, id: selectedManager0.id, name: selectedManager0.name, role: selectedManager0.role, stat: selectedManager0.stat }
-      : { hasSelection: false };
+      ? { hasSelection: true, noSelection: false, id: selectedManager0.id, name: selectedManager0.name }
+      : { hasSelection: false, noSelection: true };
 
     // --- chat demo ---
     const chipDefs = [
@@ -632,10 +698,11 @@ class Component extends DCLogic {
     const dotStyle = (i) => ({ width: '7px', height: '7px', borderRadius: '50%', background: '#bbb', animation: 'bf-typing-dot 1.2s ease-in-out infinite', animationDelay: (i * 0.2) + 's' });
     const chat = {
       hasSelection: !!selectedManager,
+      noSelection: !selectedManager,
       showPlaceholder: !selectedManager,
       managerImgId: selectedManager ? selectedManager.id : 'chat-empty',
       headerName: selectedManager ? selectedManager.name : 'buddyfit',
-      headerSub: selectedManager ? `${selectedManager.role} · 선택한 매니저가 직접 작성한 대화입니다.` : '매니저를 선택해주세요',
+      headerSub: selectedManager ? '선택한 매니저가 직접 작성한 질답 입니다.' : '매니저를 선택해주세요',
       now,
       showMsg1: !!selectedManager && st.chatStage >= 1,
       showTyping: !!selectedManager && st.chatTyping,
@@ -692,9 +759,11 @@ class Component extends DCLogic {
       storyMainStyle: {
         display: 'flex', width: this.STORY_MAIN_SIZE.w + 'px', height: this.STORY_MAIN_SIZE.h + 'px', flex: 'none',
         borderRadius: '16px', overflow: 'hidden', background: '#fdfaf8', border: '1px solid #f3e9e9',
-        boxShadow: '0 20px 40px rgba(43,43,43,.18)', transformStyle: 'preserve-3d', transition: 'transform .15s ease-out',
-        transform: `rotateX(${(st.tilt.storyMain || { rx: 0 }).rx}deg) rotateY(${(st.tilt.storyMain || { ry: 0 }).ry}deg)`
+        boxShadow: '0 20px 40px rgba(43,43,43,.18)', transformStyle: 'preserve-3d', transition: 'transform .15s ease-out, opacity .22s ease',
+        transform: `rotateX(${(st.tilt.storyMain || { rx: 0 }).rx}deg) rotateY(${(st.tilt.storyMain || { ry: 0 }).ry}deg)`,
+        opacity: st.storyMainFading ? 0 : 1
       },
+      storyMainRef: (el) => { if (el) this.storyMainEl = el; },
       storyMainOnMove: this.handleTiltMove('storyMain', 8),
       storyMainOnLeave: this.handleTiltLeave('storyMain'),
       storyOuterStyle: {
@@ -721,7 +790,7 @@ class Component extends DCLogic {
       storyStackOnScroll: (e) => this.handleStoryStackScroll(e),
       storyStackOnDown: (e) => this.handleStoryStackDown(e),
       storyStackOnDragMove: (e) => this.handleStoryStackDragMove(e),
-      storyStackOnDragUp: () => this.handleStoryStackDragUp(),
+      storyStackOnDragUp: (e) => this.handleStoryStackDragUp(e),
       storyStackStyle: {
         display: 'flex', flexDirection: st.storyIsMobile ? 'row' : 'column', alignItems: 'center', justifyContent: 'flex-start',
         gap: this.STORY_GAP + 'px', overflow: 'auto', position: 'relative', scrollbarWidth: 'none', msOverflowStyle: 'none', flex: 'none', boxSizing: 'border-box',
