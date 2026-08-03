@@ -11,6 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
 <script src="./image-slot.js"></script>
+<script src="./images-data.js"></script>
 <style>
 body{margin:0;font-family:'Noto Sans KR',sans-serif}
 a{color:#f46375;text-decoration:none}
@@ -20,6 +21,11 @@ a:hover{color:#d8465a}
 @keyframes bf-typing-dot{0%,60%,100%{transform:translateY(0);opacity:.5}30%{transform:translateY(-4px);opacity:1}}
 @keyframes bf-bounce-up{0%,100%{transform:translateY(0);opacity:.6}50%{transform:translateY(-6px);opacity:1}}
 .bf-stack::-webkit-scrollbar{display:none}
+.bf-chat-scroll::-webkit-scrollbar{width:6px}
+.bf-chat-scroll::-webkit-scrollbar-track{background:transparent}
+.bf-chat-scroll::-webkit-scrollbar-thumb{background:rgba(0,0,0,.5);border-radius:3px}
+.bf-chat-scroll{scrollbar-width:thin;scrollbar-color:rgba(0,0,0,.5) transparent}
+image-slot::part(frame){background:transparent}
 </style>
 </helmet>
 
@@ -33,32 +39,153 @@ a:hover{color:#d8465a}
 <div style="padding:11px 24px;border-radius:30px;background:#f46375;color:#fff;font-size:14px;font-weight:700;transition:all .25s ease;cursor:pointer" style-hover="background:#d8465a;transform:translateY(-1px);box-shadow:0 6px 16px rgba(244,99,117,.35)">무료 상담 신청</div>
 </div>
 
-<div style="display:flex;flex-wrap:wrap-reverse;align-items:center;gap:32px;max-width:1200px;margin:0 auto;padding:16px clamp(20px,5vw,64px) 64px">
-<div style="flex:1 1 340px;min-width:260px">
-<div style="display:inline-block;padding:7px 16px;border-radius:20px;background:#fdeef0;color:#d8465a;font-size:13px;font-weight:700;margin-bottom:20px">남성 전문 소개팅</div>
-<div style="font-size:clamp(30px,4.2vw,46px);font-weight:900;line-height:1.35;margin-bottom:20px">여자 사람 친구가<br>알려주는 <span style="color:#f46375">진짜 연애</span></div>
-<div style="font-size:16px;color:#767676;line-height:1.75;margin-bottom:30px">소개부터 대화, 스타일, 이성에게 보이는 이미지까지<br>여성의 시선에서 솔직하고 현실적인 조언을 드립니다.</div>
-<div style="display:flex;gap:12px;flex-wrap:wrap">
-<div style="padding:15px 30px;border-radius:30px;background:#f46375;color:#fff;font-size:15px;font-weight:700;transition:all .25s ease;cursor:pointer" style-hover="background:#d8465a;transform:translateY(-2px);box-shadow:0 10px 24px rgba(244,99,117,.35)">무료 상담 신청하기</div>
-<div style="padding:15px 30px;border-radius:30px;border:2px solid #2b2b2b;color:#2b2b2b;font-size:15px;font-weight:700;transition:all .25s ease;cursor:pointer" style-hover="background:#2b2b2b;color:#fff">버디핏 더 알아보기</div>
+<div style="{{ heroContainerStyle }}">
+<div style="{{ heroLeftColStyle }}" onMouseMove="{{ heroLeftOnMouseMove }}" onMouseLeave="{{ heroLeftOnMouseLeave }}">
+<div style="{{ heroGlowLeftStyle }}"></div>
+<div style="{{ heroLeftInnerStyle }}">
+<div style="font-size:13px;font-weight:700;color:#f46375;letter-spacing:1px;margin-bottom:14px;background:#fdeef0;border-radius:20px;padding:6px 14px;width:fit-content">남성 전문 소개팅</div>
+<div style="font-size:clamp(30px,3.6vw,44px);font-weight:900;line-height:1.3;margin-bottom:18px">여자 사람 친구가<br>알려주는 <span style="color:#f46375">진짜 연애</span></div>
+<div style="font-size:15.5px;color:#767676;line-height:1.7;max-width:420px">소개부터 대화, 스타일, 이성에게 보이는 이미지까지<br>여성의 시선에서 솔직하고 현실적인 조언을 드립니다.</div>
+<div style="margin-top:32px;display:inline-block;padding:16px 36px;border-radius:30px;background:#f46375;color:#fff;font-size:16px;font-weight:700;cursor:pointer;width:fit-content;transition:all .25s ease" style-hover="background:#d8465a;transform:translateY(-2px)">무료 상담 신청하기</div>
+<div style="margin-top:14px;font-size:13px;color:#a89c8d">상담도 친구처럼 할꺼에요</div>
 </div>
 </div>
-<div style="flex:1 1 340px;min-width:260px">
-<image-slot id="hero" shape="rounded" radius="24" placeholder="히어로 이미지 (매니저+회원 컷)" style="width:100%;height:380px;box-shadow:0 20px 50px rgba(43,43,43,.12)"></image-slot>
+<div style="{{ heroRightColStyle }}" onMouseMove="{{ heroRightOnMouseMove }}" onMouseLeave="{{ heroRightOnMouseLeave }}">
+<div style="{{ heroGlowRightStyle }}"></div>
+
+<sc-if value="{{ heroShowBadges }}" hint-placeholder-val="{{ true }}">
+<div style="position:absolute;left:3%;top:8%;background:#fff;border-radius:16px;padding:12px 16px;box-shadow:0 10px 24px rgba(43,43,43,.14);display:flex;align-items:center;gap:8px;animation:bf-float 5s ease-in-out infinite;z-index:2">
+<span style="font-size:18px;color:#f9b13d">★★★★★</span>
+<div><div style="font-size:13px;font-weight:700;color:#2b2b2b">4.9 만족도</div><div style="font-size:11px;color:#8c8178">실제 후기 기반</div></div>
+</div>
+<div style="position:absolute;right:3%;bottom:6%;background:#fff;border-radius:16px;padding:12px 16px;box-shadow:0 10px 24px rgba(43,43,43,.14);display:flex;align-items:center;gap:10px;animation:bf-float 5.5s ease-in-out infinite .8s;z-index:2">
+<div style="width:34px;height:34px;border-radius:50%;background:#fdeef0;display:flex;align-items:center;justify-content:center;flex:none">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f46375" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"></path></svg>
+</div>
+<div><div style="font-size:13px;font-weight:700;color:#2b2b2b">커플 성사 120+</div><div style="font-size:11px;color:#8c8178">이번 달 기준</div></div>
+</div>
+</sc-if>
+
+<div style="{{ heroPhoneWrapStyle }}">
+
+<sc-if value="{{ heroShowHome }}" hint-placeholder-val="{{ true }}">
+<div style="background:#f46375;padding:16px;flex:none">
+<div style="font-size:17px;font-weight:700;color:#fff">buddyfit</div>
+</div>
+<div style="flex:1;overflow-y:auto;display:flex;flex-direction:column">
+<sc-for list="{{ heroHomeList }}" as="m" hint-placeholder-count="4">
+<div style="display:flex;align-items:center;gap:12px;padding:12px 16px;cursor:pointer;border-bottom:1px solid rgba(0,0,0,.05);transition:background .15s ease" style-hover="background:rgba(0,0,0,.04)" onClick="{{ m.onClick }}">
+<img src="{{ m.imgUrl }}" style="width:48px;height:48px;flex:none;border-radius:50%;object-fit:cover;display:block" />
+<div style="flex:1;min-width:0">
+<div style="font-size:14.5px;font-weight:700;color:#2b2b2b">{{ m.name }}</div>
+<div style="font-size:12px;color:#8c8178;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ m.preview }}</div>
+</div>
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c9c2b8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><polyline points="9 6 15 12 9 18"></polyline></svg>
+</div>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{ heroShowChat }}" hint-placeholder-val="{{ false }}">
+<div style="background:#f46375;padding:12px 16px;display:flex;align-items:center;gap:10px">
+<div style="color:#fff;font-size:20px;cursor:pointer;padding:4px 6px;line-height:1;flex:none" onClick="{{ heroChat.onGoHome }}">←</div>
+<div style="position:relative;flex:none;width:38px;height:38px">
+<sc-if value="{{ heroChat.hasSelection }}" hint-placeholder-val="{{ false }}">
+<img src="{{ heroChat.managerImgUrl }}" style="width:38px;height:38px;border-radius:50%;object-fit:cover;display:block" />
+<div style="position:absolute;bottom:1px;right:1px;width:10px;height:10px;border-radius:50%;background:#4ade80;border:2px solid #f46375"></div>
+</sc-if>
+<sc-if value="{{ heroChat.noSelection }}" hint-placeholder-val="{{ true }}">
+<div style="width:100%;height:100%;border-radius:50%;background:rgba(255,255,255,.22);display:flex;align-items:center;justify-content:center">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.2"></circle><path d="M5.5 19c1.2-3.5 3.8-5 6.5-5s5.3 1.5 6.5 5"></path></svg>
+</div>
+</sc-if>
+</div>
+<div style="flex:1;min-width:0">
+<div style="font-size:14px;font-weight:700;color:#fff;line-height:1.2">{{ heroChat.headerName }}</div>
+<div style="font-size:11px;color:rgba(255,255,255,.75);margin-top:1px">{{ heroChat.headerSub }}</div>
+</div>
+<sc-if value="{{ heroChat.hasSelection }}" hint-placeholder-val="{{ false }}">
+<div style="color:rgba(255,255,255,.85);font-size:18px;cursor:pointer;padding:4px 6px;line-height:1" onClick="{{ heroChat.onReset }}">↺</div>
+</sc-if>
+</div>
+
+<div class="bf-chat-scroll" style="flex:1;overflow-y:auto;padding:16px 12px;display:flex;flex-direction:column;gap:8px;min-height:260px">
+<sc-if value="{{ heroChat.showPlaceholder }}" hint-placeholder-val="{{ true }}">
+<div style="flex:1;display:flex;align-items:center;justify-content:center;text-align:center;color:#a0927e;font-size:12.5px;line-height:1.7;padding:20px">매니저 카드를 클릭하면<br>대화를 미리볼 수 있어요</div>
+</sc-if>
+<sc-if value="{{ heroChat.hasSelection }}" hint-placeholder-val="{{ false }}">
+<div style="text-align:center;font-size:11px;color:#a0927e;margin:4px 0 8px;background:rgba(0,0,0,.06);border-radius:10px;padding:3px 10px;align-self:center">선택한 매니저가 직접 작성한 질답 입니다.</div>
+</sc-if>
+<sc-if value="{{ heroChat.showMsg1 }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px">
+<div style="background:#cfe9f7;color:#2b3b45;padding:9px 13px;border-radius:16px;font-size:13px;line-height:1.55;max-width:78%;box-shadow:0 1px 2px rgba(0,0,0,.1)">소개팅 잘하고 싶은데 뭐부터 해야 할지 모르겠어요</div>
+<div style="font-size:10px;color:#a0927e;margin-right:2px">{{ heroChat.now }} ✓✓</div>
+</div>
+</sc-if>
+<sc-if value="{{ heroChat.showTyping }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;align-items:flex-end;gap:6px">
+<img src="{{ heroChat.managerImgUrl }}" style="width:28px;height:28px;flex:none;border-radius:50%;object-fit:cover;display:block" />
+<div style="display:flex;align-items:center;gap:4px;padding:10px 14px;background:#f5ecdd;border-radius:16px 16px 16px 4px;width:fit-content">
+<div style="{{ heroChat.dot0Style }}"></div><div style="{{ heroChat.dot1Style }}"></div><div style="{{ heroChat.dot2Style }}"></div>
+</div>
+</div>
+</sc-if>
+<sc-if value="{{ heroChat.showMsg2 }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;align-items:flex-start;gap:6px">
+<img src="{{ heroChat.managerImgUrl }}" style="width:28px;height:28px;flex:none;border-radius:50%;object-fit:cover;display:block" />
+<div style="display:flex;flex-direction:column;gap:2px">
+<div style="font-size:11px;color:#7a6a5a;margin-left:2px;margin-bottom:2px">{{ heroChat.headerName }}</div>
+<div style="background:#f5ecdd;color:#4a3f30;padding:9px 13px;border-radius:16px 16px 16px 4px;font-size:13px;line-height:1.55;max-width:78%;box-shadow:0 1px 2px rgba(0,0,0,.1)">그 마음이 제일 중요해요. 우선 첫인상부터 같이 점검해볼까요?</div>
+<div style="font-size:10px;color:#a0927e;margin-left:2px">{{ heroChat.now }}</div>
+</div>
+</div>
+</sc-if>
+<sc-if value="{{ heroChat.showChips }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:4px;justify-content:flex-end">
+<sc-for list="{{ heroChat.chips }}" as="c" hint-placeholder-count="3">
+<div style="{{ c.style }}" onClick="{{ c.onClick }}">{{ c.label }}</div>
+</sc-for>
+</div>
+</sc-if>
+<sc-if value="{{ heroChat.showReply }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px">
+<div style="background:#cfe9f7;color:#2b3b45;padding:9px 13px;border-radius:16px;font-size:13px;line-height:1.55;max-width:78%;box-shadow:0 1px 2px rgba(0,0,0,.1)">{{ heroChat.choiceLabel }}</div>
+<div style="font-size:10px;color:#a0927e;margin-right:2px">{{ heroChat.now }} ✓✓</div>
+</div>
+<div style="display:flex;align-items:flex-start;gap:6px">
+<img src="{{ heroChat.managerImgUrl }}" style="width:28px;height:28px;flex:none;border-radius:50%;object-fit:cover;display:block" />
+<div style="display:flex;flex-direction:column;gap:2px">
+<div style="font-size:11px;color:#7a6a5a;margin-left:2px;margin-bottom:2px">{{ heroChat.headerName }}</div>
+<div style="background:#f5ecdd;color:#4a3f30;padding:9px 13px;border-radius:16px 16px 16px 4px;font-size:13px;line-height:1.55;max-width:78%;box-shadow:0 1px 2px rgba(0,0,0,.1)">{{ heroChat.replyText }}</div>
+<div style="font-size:10px;color:#a0927e;margin-left:2px">{{ heroChat.now }}</div>
+</div>
+</div>
+</sc-if>
+</div>
+
+<div style="background:#f0ebe3;padding:8px 10px;display:flex;align-items:center;gap:8px;border-top:1px solid rgba(0,0,0,.06)">
+<div style="flex:1;background:#fff;border-radius:20px;padding:8px 14px;font-size:13px;color:#bbb;box-shadow:0 1px 2px rgba(0,0,0,.06)">실제 상담에서는 자유롭게 대화할 수 있어요</div>
+<div style="width:36px;height:36px;border-radius:50%;background:#f46375;display:flex;align-items:center;justify-content:center;flex:none">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+</div>
+</div>
+</sc-if>
+
+</div>
+
+</div>
+
+<div style="position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:5">
+<div style="{{ heroIllustrationWrapStyle }}">
+<img src="{{ heroIllustrationUrl }}" style="width:100%;height:auto;aspect-ratio:1/1;object-fit:cover;display:block" />
 </div>
 </div>
 
-<div ref="{{ quoteRef }}" style="{{ quoteStyle }}">
-<div style="max-width:720px;margin:0 auto;font-size:clamp(17px,2vw,21px);font-weight:700;line-height:1.65">"매니저가 아닌, 진짜 이성 친구처럼 —<br>여성의 시선으로 당신의 연애를 함께 고민합니다"</div>
 </div>
 
 <div ref="{{ experienceRef }}" style="{{ experienceStyle }}">
 <div style="max-width:1080px;margin:0 auto">
-<div style="text-align:center;font-size:13px;font-weight:700;color:#f46375;letter-spacing:1.5px;margin-bottom:12px">TRY IT YOURSELF</div>
-<div style="text-align:center;font-size:clamp(24px,3vw,32px);font-weight:900;margin-bottom:14px">버디핏을 직접 경험해보세요</div>
-<div style="text-align:center;font-size:15px;color:#767676;margin-bottom:52px">마음에 드는 매니저를 선택하고, 대화를 미리 체험해보세요</div>
-
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:28px;margin-bottom:60px">
+<div style="{{ teamGridStyle }}">
 <sc-for list="{{ team }}" as="m" hint-placeholder-count="4">
 <div style="perspective:900px">
 <div style="{{ m.tiltStyle }}" onMouseMove="{{ m.onMove }}" onMouseLeave="{{ m.onLeave }}" onClick="{{ m.onClickCard }}">
@@ -66,7 +193,7 @@ a:hover{color:#d8465a}
 <div style="position:absolute;inset:0;backface-visibility:hidden;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#fff;border:1px solid #f3e9e9;border-radius:20px;padding:20px;box-shadow:0 8px 24px rgba(43,43,43,.06)">
 <div style="{{ m.glowStyle }}"></div>
 <div style="width:90px;height:90px;border-radius:50%;overflow:hidden;margin-bottom:14px">
-<image-slot id="{{ m.id }}" shape="circle" placeholder="사진" style="width:100%;height:100%"></image-slot>
+<img src="{{ m.imgUrl }}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;display:block" />
 </div>
 <div style="font-size:15px;font-weight:700;margin-bottom:3px">{{ m.name }}</div>
 </div>
@@ -80,112 +207,8 @@ a:hover{color:#d8465a}
 </sc-for>
 </div>
 
-<div style="display:flex;gap:40px;flex-wrap:wrap;justify-content:center;align-items:stretch">
-
-<div style="flex:1 1 300px;max-width:340px;background:#fff;border:1px solid #f3e9e9;border-radius:20px;padding:28px;display:flex;flex-direction:column;align-items:center;text-align:center;box-shadow:0 8px 24px rgba(43,43,43,.06);min-height:420px;justify-content:center">
-<sc-if value="{{ profilePane.hasSelection }}" hint-placeholder-val="{{ false }}">
-<div style="font-size:12px;font-weight:700;color:#f46375;letter-spacing:1px;margin-bottom:16px">지금 대화 중</div>
-<div style="width:110px;height:110px;border-radius:50%;overflow:hidden;margin-bottom:16px">
-<image-slot id="{{ profilePane.id }}" shape="circle" placeholder="사진" style="width:100%;height:100%"></image-slot>
-</div>
-<div style="font-size:19px;font-weight:700">{{ profilePane.name }}</div>
-</sc-if>
-<sc-if value="{{ profilePane.noSelection }}" hint-placeholder-val="{{ true }}">
-<div style="font-size:20px;color:#f9b8c0;margin-bottom:8px;animation:bf-bounce-up 1.6s ease-in-out infinite">↑</div>
-<div style="width:80px;height:80px;border-radius:50%;background:#fdeef0;display:flex;align-items:center;justify-content:center;margin-bottom:18px">
-<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#f46375" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.2"></circle><path d="M5.5 19c1.2-3.5 3.8-5 6.5-5s5.3 1.5 6.5 5"></path></svg>
-</div>
-<div style="font-size:14.5px;color:#767676;line-height:1.7;font-weight:500">위 매니저 카드를 클릭하고<br>대화를 미리 체험해보세요</div>
-</sc-if>
-
 </div>
 
-<div style="flex:1 1 300px;max-width:360px;background:#ece5dd;border-radius:20px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 8px 32px rgba(43,43,43,.12);min-height:420px">
-<div style="background:#f46375;padding:12px 16px;display:flex;align-items:center;gap:10px">
-<div style="position:relative;flex:none;width:38px;height:38px">
-<sc-if value="{{ chat.hasSelection }}" hint-placeholder-val="{{ false }}">
-<image-slot id="{{ chat.managerImgId }}" shape="circle" placeholder="" style="width:38px;height:38px"></image-slot>
-<div style="position:absolute;bottom:1px;right:1px;width:10px;height:10px;border-radius:50%;background:#4ade80;border:2px solid #f46375"></div>
-</sc-if>
-<sc-if value="{{ chat.noSelection }}" hint-placeholder-val="{{ true }}">
-<div style="width:100%;height:100%;border-radius:50%;background:rgba(255,255,255,.22);display:flex;align-items:center;justify-content:center">
-<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.2"></circle><path d="M5.5 19c1.2-3.5 3.8-5 6.5-5s5.3 1.5 6.5 5"></path></svg>
-</div>
-</sc-if>
-</div>
-<div style="flex:1;min-width:0">
-<div style="font-size:14px;font-weight:700;color:#fff;line-height:1.2">{{ chat.headerName }}</div>
-<div style="font-size:11px;color:rgba(255,255,255,.75);margin-top:1px">{{ chat.headerSub }}</div>
-</div>
-<sc-if value="{{ chat.hasSelection }}" hint-placeholder-val="{{ false }}">
-<div style="color:rgba(255,255,255,.85);font-size:18px;cursor:pointer;padding:4px 6px;line-height:1" onClick="{{ chat.onReset }}">↺</div>
-</sc-if>
-</div>
-
-<div style="flex:1;overflow-y:auto;padding:16px 12px;display:flex;flex-direction:column;gap:8px;min-height:260px">
-<sc-if value="{{ chat.showPlaceholder }}" hint-placeholder-val="{{ true }}">
-<div style="flex:1;display:flex;align-items:center;justify-content:center;text-align:center;color:#a0927e;font-size:12.5px;line-height:1.7;padding:20px">매니저 카드를 클릭하면<br>대화를 미리볼 수 있어요</div>
-</sc-if>
-<sc-if value="{{ chat.hasSelection }}" hint-placeholder-val="{{ false }}">
-<div style="text-align:center;font-size:11px;color:#a0927e;margin:4px 0 8px;background:rgba(0,0,0,.06);border-radius:10px;padding:3px 10px;align-self:center">오늘</div>
-</sc-if>
-<sc-if value="{{ chat.showMsg1 }}" hint-placeholder-val="{{ false }}">
-<div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px">
-<div style="background:#f9e84e;color:#2b2b2b;padding:9px 13px;border-radius:4px 16px 16px 16px;font-size:13px;line-height:1.55;max-width:78%;box-shadow:0 1px 2px rgba(0,0,0,.1)">소개팅 잘하고 싶은데 뭐부터 해야 할지 모르겠어요</div>
-<div style="font-size:10px;color:#a0927e;margin-right:2px">{{ chat.now }} ✓✓</div>
-</div>
-</sc-if>
-<sc-if value="{{ chat.showTyping }}" hint-placeholder-val="{{ false }}">
-<div style="display:flex;align-items:flex-end;gap:6px">
-<image-slot id="{{ chat.managerImgId }}" shape="circle" placeholder="" style="width:28px;height:28px;flex:none"></image-slot>
-<div style="display:flex;align-items:center;gap:4px;padding:10px 14px;background:#f0f0f0;border-radius:16px 16px 16px 4px;width:fit-content">
-<div style="{{ chat.dot0Style }}"></div><div style="{{ chat.dot1Style }}"></div><div style="{{ chat.dot2Style }}"></div>
-</div>
-</div>
-</sc-if>
-<sc-if value="{{ chat.showMsg2 }}" hint-placeholder-val="{{ false }}">
-<div style="display:flex;align-items:flex-start;gap:6px">
-<image-slot id="{{ chat.managerImgId }}" shape="circle" placeholder="" style="width:28px;height:28px;flex:none"></image-slot>
-<div style="display:flex;flex-direction:column;gap:2px">
-<div style="font-size:11px;color:#7a6a5a;margin-left:2px;margin-bottom:2px">{{ chat.headerName }}</div>
-<div style="background:#fff;color:#2b2b2b;padding:9px 13px;border-radius:16px 16px 16px 4px;font-size:13px;line-height:1.55;max-width:78%;box-shadow:0 1px 2px rgba(0,0,0,.1)">그 마음이 제일 중요해요. 우선 첫인상부터 같이 점검해볼까요?</div>
-<div style="font-size:10px;color:#a0927e;margin-left:2px">{{ chat.now }}</div>
-</div>
-</div>
-</sc-if>
-<sc-if value="{{ chat.showChips }}" hint-placeholder-val="{{ false }}">
-<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:4px;justify-content:flex-end">
-<sc-for list="{{ chat.chips }}" as="c" hint-placeholder-count="3">
-<div style="{{ c.style }}" onClick="{{ c.onClick }}">{{ c.label }}</div>
-</sc-for>
-</div>
-</sc-if>
-<sc-if value="{{ chat.showReply }}" hint-placeholder-val="{{ false }}">
-<div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px">
-<div style="background:#f9e84e;color:#2b2b2b;padding:9px 13px;border-radius:4px 16px 16px 16px;font-size:13px;line-height:1.55;max-width:78%;box-shadow:0 1px 2px rgba(0,0,0,.1)">{{ chat.choiceLabel }}</div>
-<div style="font-size:10px;color:#a0927e;margin-right:2px">{{ chat.now }} ✓✓</div>
-</div>
-<div style="display:flex;align-items:flex-start;gap:6px">
-<image-slot id="{{ chat.managerImgId }}" shape="circle" placeholder="" style="width:28px;height:28px;flex:none"></image-slot>
-<div style="display:flex;flex-direction:column;gap:2px">
-<div style="font-size:11px;color:#7a6a5a;margin-left:2px;margin-bottom:2px">{{ chat.headerName }}</div>
-<div style="background:#fff;color:#2b2b2b;padding:9px 13px;border-radius:16px 16px 16px 4px;font-size:13px;line-height:1.55;max-width:78%;box-shadow:0 1px 2px rgba(0,0,0,.1)">{{ chat.replyText }}</div>
-<div style="font-size:10px;color:#a0927e;margin-left:2px">{{ chat.now }}</div>
-</div>
-</div>
-</sc-if>
-</div>
-
-<div style="background:#f0ebe3;padding:8px 10px;display:flex;align-items:center;gap:8px;border-top:1px solid rgba(0,0,0,.06)">
-<div style="flex:1;background:#fff;border-radius:20px;padding:8px 14px;font-size:13px;color:#bbb;box-shadow:0 1px 2px rgba(0,0,0,.06)">실제 상담에서는 자유롭게 대화할 수 있어요</div>
-<div style="width:36px;height:36px;border-radius:50%;background:#f46375;display:flex;align-items:center;justify-content:center;flex:none">
-<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
-</div>
-</div>
-</div>
-
-</div>
-</div>
 </div>
 
 <div style="max-width:900px;margin:0 auto;padding:76px clamp(20px,5vw,64px) 40px">
@@ -218,8 +241,8 @@ a:hover{color:#d8465a}
 <div style="{{ storyOuterStyle }}">
 <div style="perspective:900px">
 <div ref="{{ storyMainRef }}" style="{{ storyMainStyle }}" onMouseMove="{{ storyMainOnMove }}" onMouseLeave="{{ storyMainOnLeave }}">
-<image-slot id="pile-img-{{ storyMain.id }}" shape="rect" placeholder="사진" style="width:66%;height:100%;flex:none"></image-slot>
-<div style="flex:1;padding:18px;display:flex;flex-direction:column;justify-content:center;min-width:0">
+<img src="{{ storyMain.imgUrl }}" style="{{ storyMainImageStyle }}" />
+<div style="{{ storyTextPanelStyle }}">
 <div style="color:#f46375;font-size:13px;letter-spacing:2px;margin-bottom:10px">★★★★★</div>
 <div style="font-size:12.5px;color:#555;line-height:1.6;margin-bottom:14px">{{ storyMain.quote }}</div>
 <div style="font-size:11.5px;color:#999;border-top:1px solid #eee;padding-top:10px">{{ storyMain.author }}</div>
@@ -232,7 +255,7 @@ a:hover{color:#d8465a}
 <sc-for list="{{ storyStackItems }}" as="c" hint-placeholder-count="10">
 <div ref="{{ c.itemRef }}" data-slot-index="{{ c.idx }}" style="{{ c.style }}">
 <div style="width:100%;height:100%;border-radius:10px;overflow:hidden;background:#fdeef0;border:1px solid #f0dfe1;box-shadow:0 6px 14px rgba(43,43,43,.1);transition:transform .18s ease" style-hover="transform:scale(1.05)">
-<image-slot id="pile-img-{{ c.id }}" shape="rect" placeholder="" style="width:100%;height:100%"></image-slot>
+<img src="{{ c.imgUrl }}" style="width:100%;height:100%;object-fit:cover;display:block" />
 </div>
 </div>
 </sc-for>
@@ -277,6 +300,7 @@ a:hover{color:#d8465a}
 <div style="text-align:center;font-size:13px;font-weight:700;color:#f46375;letter-spacing:1.5px;margin-bottom:12px">FAQ</div>
 <div style="text-align:center;font-size:clamp(24px,3vw,32px);font-weight:900;margin-bottom:44px">자주 묻는 질문</div>
 <sc-for list="{{ faqs }}" as="f" hint-placeholder-count="4">
+<sc-if value="{{ f.show }}" hint-placeholder-val="{{ true }}">
 <div style="border-bottom:1px solid #eee">
 <div style="padding:20px 4px;cursor:pointer;border-radius:10px;transition:background .2s ease" style-hover="background:#fdf9f8" onClick="{{ f.onClick }}">
 <div style="display:flex;align-items:center;justify-content:space-between;gap:16px">
@@ -290,14 +314,18 @@ a:hover{color:#d8465a}
 </div>
 </div>
 </div>
+</sc-if>
 </sc-for>
+<div style="{{ faqMoreWrapStyle }}">
+<div style="{{ faqMoreBtnStyle }}" style-hover="background:#fdeef0" onClick="{{ faqToggleExpand }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f46375" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="{{ faqMoreIconStyle }}"><polyline points="6 9 12 15 18 9"></polyline></svg></div>
+</div>
 </div>
 </div>
 
 <div ref="{{ ctaRef }}" style="{{ ctaStyle }}">
 <div style="font-size:clamp(24px,3.4vw,34px);font-weight:900;margin-bottom:16px">지금, 여자 사람 친구에게 물어보세요</div>
 <div style="font-size:15px;color:#bbb;margin-bottom:32px">첫 상담은 무료입니다. 부담 없이 시작해보세요.</div>
-<div style="display:inline-block;padding:16px 36px;border-radius:30px;background:#f46375;color:#fff;font-size:16px;font-weight:700;cursor:pointer;transition:all .25s ease;animation:bf-pulse 2.6s ease-in-out infinite" style-hover="background:#d8465a;transform:translateY(-2px) scale(1.03);animation:none">무료 상담 신청하기</div>
+<div style="display:inline-block;padding:16px 36px;border-radius:30px;background:#f46375;color:#fff;font-size:16px;font-weight:700;cursor:pointer;transition:all .25s ease;animation:bf-pulse 2.6s ease-in-out infinite" style-hover="background:#d8465a;transform:translateY(-2px) scale(1.03);animation:none">지금 무료로 시작하기</div>
 </div>
 
 <div style="padding:26px;text-align:center;font-size:12px;color:#999">© buddyfit. All rights reserved.</div>
@@ -311,7 +339,9 @@ class Component extends DCLogic {
     openIndex: -1, revealed: {}, headerScrolled: false, scrollProgress: 0, tilt: {}, selectedManagerId: null,
     chatStage: 0, chatTyping: false, chatChoice: null,
     cardGlow: {}, iconRevealed: {}, hoveredFeatureIdx: null,
-    storyActiveId: 0, storySlotOccupant: [100, 1, 101, 102, 2, 103, 104, 105, 106, 107], storyCenterSlot: 4, storyIsMobile: false, storyMainFading: false, storySwapFromId: null
+    storyActiveId: 0, storySlotOccupant: [100, 1, 101, 102, 2, 103, 104, 105, 106, 107], storyCenterSlot: 4, storyIsMobile: false, storyMainFading: false, storySwapFromId: null, storyTextIn: true, isTablet: false, heroIsMobile: false,
+    heroSelectedManagerId: null, heroChatStage: 0, heroChatTyping: false, heroChatChoice: null, heroShowHome: true,
+    heroGlowLeft: { x: -999, y: -999, active: false }, heroGlowRight: { x: -999, y: -999, active: false }, faqExpanded: false
   };
   revealRefs = {};
   pileContent = {
@@ -348,7 +378,10 @@ class Component extends DCLogic {
   }
   handleSelectManager(id) {
     return () => {
-      if (this.state.selectedManagerId === id) return;
+      if (this.state.selectedManagerId === id) {
+        this.setState({ selectedManagerId: null });
+        return;
+      }
       this.setState({ selectedManagerId: id });
       this.restartChat();
     };
@@ -365,6 +398,35 @@ class Component extends DCLogic {
     ];
   }
 
+  handleHeroGlowMove(side) {
+    return (e) => {
+      const rect = e.currentTarget.getBoundingClientRect();
+      this.setState({ ['heroGlow' + side]: { x: e.clientX - rect.left, y: e.clientY - rect.top, active: true } });
+    };
+  }
+  handleHeroGlowLeave(side) {
+    return () => this.setState({ ['heroGlow' + side]: { x: -999, y: -999, active: false } });
+  }
+
+  handleHeroSelectManager(id) {
+    return () => {
+      if (this.state.heroSelectedManagerId === id) return;
+      this.setState({ heroSelectedManagerId: id });
+      this.restartHeroChat();
+    };
+  }
+
+  restartHeroChat() {
+    (this.heroChatTimers || []).forEach(clearTimeout);
+    this.setState({ heroChatStage: 0, heroChatTyping: false, heroChatChoice: null });
+    this.heroChatTimers = [
+      setTimeout(() => this.setState({ heroChatStage: 1 }), 600),
+      setTimeout(() => this.setState({ heroChatTyping: true }), 1400),
+      setTimeout(() => this.setState({ heroChatTyping: false, heroChatStage: 2 }), 2600),
+      setTimeout(() => this.setState({ heroChatStage: 3 }), 3200)
+    ];
+  }
+
   handleStoryStackScroll(e) {
     if (this._storyScrollRaf) return;
     this._storyScrollRaf = requestAnimationFrame(() => {
@@ -376,6 +438,7 @@ class Component extends DCLogic {
   handleStoryStackDown(e) {
     const container = this.storyStackEl;
     if (!container) return;
+    if (e.cancelable) e.preventDefault();
     if (e.currentTarget.setPointerCapture) { try { e.currentTarget.setPointerCapture(e.pointerId); } catch (err) {} }
     this._storyDrag = {
       startX: e.clientX, startY: e.clientY,
@@ -387,6 +450,7 @@ class Component extends DCLogic {
     const d = this._storyDrag;
     const container = this.storyStackEl;
     if (!d || !container) return;
+    if (e.cancelable) e.preventDefault();
     const isMobile = this.state.storyIsMobile;
     const delta = isMobile ? e.clientX - d.startX : e.clientY - d.startY;
     if (Math.abs(delta) > 3) d.moved = true;
@@ -443,34 +507,43 @@ class Component extends DCLogic {
       const itemEl = this.storyStackItemEls[clickedId];
       const DUR = 460;
       if (mainEl && itemEl) {
-        const mainRect = mainEl.getBoundingClientRect();
-        const itemRect = itemEl.getBoundingClientRect();
-        const mainImg = mainEl.querySelector('image-slot');
-        const itemImg = itemEl.querySelector('image-slot');
-        const mainSrc = mainImg && mainImg.shadowRoot ? (mainImg.shadowRoot.querySelector('img') || {}).src : null;
-        const itemSrc = itemImg && itemImg.shadowRoot ? (itemImg.shadowRoot.querySelector('img') || {}).src : null;
+        const mainImgEl = mainEl.querySelector('image-slot');
+        const itemImgEl = itemEl.querySelector('image-slot');
+        // Fly between the PICTURE rects only (not the full main card, which
+        // includes the text column) — so the incoming dummy lands exactly
+        // where the photo sits and keeps its own cover-fit ratio.
+        const mainRect = (mainImgEl || mainEl).getBoundingClientRect();
+        const itemRect = (itemImgEl || itemEl).getBoundingClientRect();
+        const mainSrc = mainImgEl && mainImgEl.shadowRoot ? (mainImgEl.shadowRoot.querySelector('img') || {}).src : null;
+        const itemSrc = itemImgEl && itemImgEl.shadowRoot ? (itemImgEl.shadowRoot.querySelector('img') || {}).src : null;
         this._flyCards(mainRect, itemRect, mainSrc, itemSrc, DUR);
       }
       clearTimeout(this._storyFadeTimer);
-      this.setState({ storyMainFading: true, storySwapFromId: clickedId });
+      clearTimeout(this._storyTextTimer);
+      this.setState({ storyMainFading: true, storyTextIn: false, storySwapFromId: clickedId });
       this._storyFadeTimer = setTimeout(() => {
         this.setState((s) => {
           const storySlotOccupant = s.storySlotOccupant.slice();
           storySlotOccupant[slotIndex] = s.storyActiveId;
           return { storyActiveId: clickedId, storySlotOccupant, storyMainFading: false, storySwapFromId: null };
         });
+        // Let the photo paint first (matching where the clone just landed),
+        // then slide the text column out from behind it on its own beat.
+        this._storyTextTimer = setTimeout(() => this.setState({ storyTextIn: true }), 70);
       }, DUR);
     };
   }
 
-  // Clones the main card and the clicked dummy as fixed-position overlays and
-  // animates them crossing to each other's rects — the real elements stay
-  // hidden (storyMainFading / storySwapFromId) until the swap lands, so the
-  // clones are the only thing visible mid-flight.
+  // Clones the main card's PHOTO and the clicked dummy's photo as
+  // fixed-position overlays and animates them crossing to each other's exact
+  // picture rects — the real elements stay hidden (storyMainFading /
+  // storySwapFromId) until the swap lands, so the clones are the only thing
+  // visible mid-flight. Each clone keeps its own aspect ratio via
+  // object-fit:cover rather than stretching to fill the destination box.
   _flyCards(mainRect, itemRect, mainSrc, itemSrc, dur) {
     const mk = (rect, src, radius) => {
       const d = document.createElement('div');
-      d.style.cssText = `position:fixed;left:${rect.left}px;top:${rect.top}px;width:${rect.width}px;height:${rect.height}px;border-radius:${radius}px;overflow:hidden;z-index:9999;pointer-events:none;box-shadow:0 12px 30px rgba(43,43,43,.25);background:#fdeef0;transition:left ${dur}ms cubic-bezier(.3,.6,.3,1),top ${dur}ms cubic-bezier(.3,.6,.3,1),width ${dur}ms cubic-bezier(.3,.6,.3,1),height ${dur}ms cubic-bezier(.3,.6,.3,1),border-radius ${dur}ms ease`;
+      d.style.cssText = `position:fixed;left:${rect.left}px;top:${rect.top}px;width:${rect.width}px;height:${rect.height}px;border-radius:${radius}px;overflow:hidden;z-index:9999;pointer-events:none;box-shadow:0 12px 30px rgba(43,43,43,.25);background:#fdeef0;transition:left ${dur}ms cubic-bezier(.3,.6,.3,1),top ${dur}ms cubic-bezier(.3,.6,.3,1),width ${dur}ms cubic-bezier(.3,.6,.3,1),height ${dur}ms cubic-bezier(.3,.6,.3,1)`;
       if (src) {
         const img = document.createElement('img');
         img.src = src;
@@ -480,15 +553,13 @@ class Component extends DCLogic {
       document.body.appendChild(d);
       return d;
     };
-    const a = mk(mainRect, mainSrc, 16);
+    const a = mk(mainRect, mainSrc, 10);
     const b = mk(itemRect, itemSrc, 10);
     requestAnimationFrame(() => requestAnimationFrame(() => {
       a.style.left = itemRect.left + 'px'; a.style.top = itemRect.top + 'px';
       a.style.width = itemRect.width + 'px'; a.style.height = itemRect.height + 'px';
-      a.style.borderRadius = '10px';
       b.style.left = mainRect.left + 'px'; b.style.top = mainRect.top + 'px';
       b.style.width = mainRect.width + 'px'; b.style.height = mainRect.height + 'px';
-      b.style.borderRadius = '16px';
     }));
     setTimeout(() => { a.remove(); b.remove(); }, dur + 40);
   }
@@ -506,10 +577,11 @@ class Component extends DCLogic {
       return {
         id,
         idx: i,
+        imgUrl: (window.BF_IMAGES || {})['pile-img-' + id],
         itemRef: (el) => { if (el) this.storyStackItemEls[id] = el; },
         style: {
           width: size.w + 'px', height: size.h + 'px', flex: 'none', cursor: 'pointer',
-          opacity,
+          opacity, WebkitUserDrag: 'none', userSelect: 'none', touchAction: 'none',
           transition: 'width .35s cubic-bezier(.22,.9,.32,1), height .35s cubic-bezier(.22,.9,.32,1), opacity .3s ease'
         }
       };
@@ -560,16 +632,30 @@ class Component extends DCLogic {
     this._storyMqListener = (e) => this.setState({ storyIsMobile: e.matches });
     this._storyMq.addEventListener('change', this._storyMqListener);
     setTimeout(() => this.recalcStoryCenterSlot(), 50);
+
+    this._tabletMq = window.matchMedia('(min-width:641px) and (max-width:1024px)');
+    this.setState({ isTablet: this._tabletMq.matches });
+    this._tabletMqListener = (e) => this.setState({ isTablet: e.matches });
+    this._tabletMq.addEventListener('change', this._tabletMqListener);
+
+    this._heroMq = window.matchMedia('(max-width:640px)');
+    this.setState({ heroIsMobile: this._heroMq.matches });
+    this._heroMqListener = (e) => this.setState({ heroIsMobile: e.matches });
+    this._heroMq.addEventListener('change', this._heroMqListener);
   }
 
   componentWillUnmount() {
     window.removeEventListener('scroll', this.onScroll);
     if (this._iconScrollTick) window.removeEventListener('scroll', this._iconScrollTick);
     if (this._storyMq) this._storyMq.removeEventListener('change', this._storyMqListener);
+    if (this._tabletMq) this._tabletMq.removeEventListener('change', this._tabletMqListener);
+    if (this._heroMq) this._heroMq.removeEventListener('change', this._heroMqListener);
     if (this.io) this.io.disconnect();
     if (this.fallbackTimer) clearTimeout(this.fallbackTimer);
     clearTimeout(this._storyFadeTimer);
+    clearTimeout(this._storyTextTimer);
     (this.chatTimers || []).forEach(clearTimeout);
+    (this.heroChatTimers || []).forEach(clearTimeout);
   }
 
   lerpColor(hexA, hexB, t) {
@@ -614,6 +700,8 @@ class Component extends DCLogic {
       const idx = i + 1;
       const reversed = i % 2 === 1;
       const r = this.mkReveal(idx, (i % 2) * 60);
+      const revealed = !!st.revealed[idx];
+      const slideTransform = revealed ? 'translateX(0)' : (reversed ? 'translateX(28px)' : 'translateX(-28px)');
       return {
         num: i + 1,
         title: f.title,
@@ -639,8 +727,8 @@ class Component extends DCLogic {
           display: 'flex', flexDirection: reversed ? 'row-reverse' : 'row', alignItems: 'center',
           gap: '28px', flexWrap: 'wrap', padding: '28px 12px', borderRadius: '14px',
           borderBottom: i < 5 ? '1px solid #eee' : 'none',
-          transition: 'opacity .6s ease, transform .3s ease, background .3s ease, background-color .5s ease',
-          opacity: r.opacity, transform: r.transform, transitionDelay: r.transitionDelay
+          transition: 'opacity .6s ease, transform .5s ease, background .3s ease, background-color .5s ease',
+          opacity: r.opacity, transform: slideTransform, transitionDelay: r.transitionDelay
         }
       };
     });
@@ -657,6 +745,7 @@ class Component extends DCLogic {
       const glow = st.cardGlow[t.id] || { x: -999, y: -999, active: false };
       return {
         ...t,
+        imgUrl: (window.BF_IMAGES || {})[t.id],
         onMove: this.handleTiltMove(t.id),
         onLeave: this.handleTiltLeave(t.id),
         onClickCard: this.handleSelectManager(t.id),
@@ -701,6 +790,7 @@ class Component extends DCLogic {
       noSelection: !selectedManager,
       showPlaceholder: !selectedManager,
       managerImgId: selectedManager ? selectedManager.id : 'chat-empty',
+      managerImgUrl: (window.BF_IMAGES || {})[selectedManager ? selectedManager.id : 'chat-empty'],
       headerName: selectedManager ? selectedManager.name : 'buddyfit',
       headerSub: selectedManager ? '선택한 매니저가 직접 작성한 질답 입니다.' : '매니저를 선택해주세요',
       now,
@@ -720,6 +810,46 @@ class Component extends DCLogic {
       }))
     };
 
+    // --- hero phone-mockup demo (namespaced separately from the TRY IT YOURSELF chat above) ---
+    const heroTeamDefs = [
+      { id: 'mgr1', name: 'O O 매니저', preview: '탭하여 대화를 시작해보세요' },
+      { id: 'mgr2', name: 'O O 매니저', preview: '탭하여 대화를 시작해보세요' },
+      { id: 'mgr3', name: 'O O 팀장', preview: '탭하여 대화를 시작해보세요' },
+      { id: 'mgr4', name: 'O O 매니저', preview: '탭하여 대화를 시작해보세요' }
+    ];
+    const heroHomeList = heroTeamDefs.map((t) => ({
+      id: t.id, name: t.name, preview: t.preview,
+      imgUrl: (window.BF_IMAGES || {})[t.id],
+      onClick: () => { this.setState({ heroSelectedManagerId: t.id, heroShowHome: false }); this.restartHeroChat(); }
+    }));
+    const heroChosen = st.heroChatChoice;
+    const heroSelectedManager = st.heroSelectedManagerId ? heroTeamDefs.find((t) => t.id === st.heroSelectedManagerId) : null;
+    const heroChat = {
+      hasSelection: !!heroSelectedManager,
+      noSelection: !heroSelectedManager,
+      showPlaceholder: !heroSelectedManager,
+      managerImgId: heroSelectedManager ? heroSelectedManager.id : 'chat-empty',
+      managerImgUrl: (window.BF_IMAGES || {})[heroSelectedManager ? heroSelectedManager.id : 'chat-empty'],
+      headerName: heroSelectedManager ? heroSelectedManager.name : 'buddyfit',
+      headerSub: heroSelectedManager ? '' : '매니저를 선택해주세요',
+      now,
+      showMsg1: !!heroSelectedManager && st.heroChatStage >= 1,
+      showTyping: !!heroSelectedManager && st.heroChatTyping,
+      showMsg2: !!heroSelectedManager && st.heroChatStage >= 2 && !st.heroChatTyping,
+      showChips: !!heroSelectedManager && st.heroChatStage >= 3 && !heroChosen,
+      showReply: !!heroSelectedManager && !!heroChosen,
+      choiceLabel: heroChosen ? heroChosen.label : '',
+      replyText: heroChosen ? heroChosen.reply : '',
+      dot0Style: dotStyle(0), dot1Style: dotStyle(1), dot2Style: dotStyle(2),
+      onReset: () => this.restartHeroChat(),
+      onGoHome: () => this.setState({ heroShowHome: true }),
+      chips: chipDefs.map((c) => ({
+        label: c.label,
+        style: 'padding:7px 13px;border:1.5px solid #f46375;color:#f46375;border-radius:20px;font-size:12px;cursor:pointer;transition:all .2s ease;background:#fff;font-weight:500',
+        onClick: () => this.setState({ heroChatChoice: c })
+      }))
+    };
+
     const items = [
       { q: '상담은 어떻게 진행되나요?', a: '답변 텍스트가 들어갈 자리입니다.' },
       { q: '비용은 얼마인가요?', a: '답변 텍스트가 들어갈 자리입니다.' },
@@ -727,14 +857,18 @@ class Component extends DCLogic {
       { q: '꼭 오프라인에서 만나야 하나요?', a: '답변 텍스트가 들어갈 자리입니다.' }
     ];
     const openIndex = st.openIndex;
+    const FAQ_VISIBLE_DEFAULT = 3;
     const faqs = items.map((it, i) => ({
       ...it,
+      show: i < FAQ_VISIBLE_DEFAULT || st.faqExpanded,
       contentStyle: { maxHeight: i === openIndex ? '240px' : '0px', overflow: 'hidden', opacity: i === openIndex ? 1 : 0, transition: 'max-height .35s ease, opacity .25s ease' },
       markStyle: { display: 'inline-block', fontSize: '18px', color: '#f46375', fontWeight: 700, transition: 'transform .3s ease', transform: i === openIndex ? 'rotate(45deg)' : 'rotate(0deg)' },
       onClick: () => this.setState((s) => ({ openIndex: s.openIndex === i ? -1 : i }))
     }));
+    const faqHasMore = items.length > FAQ_VISIBLE_DEFAULT;
 
     return {
+      heroChat, heroHomeList, heroShowHome: st.heroShowHome, heroShowChat: !st.heroShowHome,
       scrollProgress: st.scrollProgress,
       headerStyle: {
         display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '16px', flexWrap: 'wrap',
@@ -746,24 +880,65 @@ class Component extends DCLogic {
       },
       features,
       team,
+      teamGridStyle: { display: 'grid', gridTemplateColumns: st.isTablet ? 'repeat(2,1fr)' : 'repeat(auto-fit,minmax(180px,1fr))', gap: '28px' },
+      heroContainerStyle: { height: st.heroIsMobile ? 'auto' : '620px', display: 'flex', flexDirection: st.heroIsMobile ? 'column' : 'row', background: '#faf8f5', position: 'relative', zIndex: 1 },
+      heroLeftColStyle: { flex: st.heroIsMobile ? 'none' : 1, position: 'relative', background: '#fff', overflow: 'hidden', order: 1, zIndex: 1 },
+      heroLeftInnerStyle: { height: st.heroIsMobile ? 'auto' : '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: st.heroIsMobile ? 'center' : 'stretch', textAlign: st.heroIsMobile ? 'center' : 'left', padding: st.heroIsMobile ? '48px clamp(20px,5vw,64px) 32px' : '48px clamp(24px,5vw,64px) 0' },
+      heroRightColStyle: { flex: st.heroIsMobile ? 'none' : 1, background: '#f0ebe3', position: 'relative', order: 2, height: st.heroIsMobile ? '600px' : 'auto', zIndex: 1 },
+      heroLeftOnMouseMove: this.handleHeroGlowMove('Left'),
+      heroLeftOnMouseLeave: this.handleHeroGlowLeave('Left'),
+      heroRightOnMouseMove: this.handleHeroGlowMove('Right'),
+      heroRightOnMouseLeave: this.handleHeroGlowLeave('Right'),
+      heroGlowLeftStyle: {
+        position: 'absolute', left: st.heroGlowLeft.x + 'px', top: st.heroGlowLeft.y + 'px', width: '420px', height: '420px',
+        transform: 'translate(-50%,-50%)', borderRadius: '50%', pointerEvents: 'none', zIndex: 0,
+        background: 'radial-gradient(circle, rgba(244,99,117,.10), rgba(244,99,117,0) 70%)',
+        opacity: st.heroGlowLeft.active ? 1 : 0, transition: 'opacity .3s ease'
+      },
+      heroGlowRightStyle: {
+        position: 'absolute', left: st.heroGlowRight.x + 'px', top: st.heroGlowRight.y + 'px', width: '420px', height: '420px',
+        transform: 'translate(-50%,-50%)', borderRadius: '50%', pointerEvents: 'none', zIndex: 0,
+        background: 'radial-gradient(circle, rgba(244,99,117,.10), rgba(244,99,117,0) 70%)',
+        opacity: st.heroGlowRight.active ? 1 : 0, transition: 'opacity .3s ease'
+      },
+      heroPhoneWrapStyle: {
+        position: 'absolute', left: '50%', transform: 'translateX(-50%)',
+        top: st.heroIsMobile ? '-24px' : '135px', bottom: st.heroIsMobile ? '-24px' : '-50px',
+        width: st.heroIsMobile ? 'min(340px,86vw)' : '340px', boxSizing: 'border-box', background: '#fff',
+        border: '2px solid #fff', borderRadius: '20px', overflow: 'hidden', display: 'flex', flexDirection: 'column',
+        boxShadow: '0 10px 30px rgba(43,43,43,.18)'
+      },
+      heroIllustrationWrapStyle: { position: 'absolute', left: '25%', bottom: '-40px', transform: 'translateX(-50%)', width: '380px', opacity: st.heroIsMobile ? 0 : 0.8 },
+      heroIllustrationUrl: (window.BF_IMAGES || {})['hero-center-illustration'],
+      heroShowBadges: !st.heroIsMobile,
       quoteRef: quote.ref,
       quoteStyle: { background: '#fdeef0', padding: '48px clamp(20px,5vw,64px)', textAlign: 'center', transition: revealTrans, opacity: quote.opacity, transform: quote.transform },
       profilePane,
       chat,
       experienceRef: experienceR.ref,
-      experienceStyle: { background: '#faf8f5', padding: '76px clamp(20px,5vw,64px)', transition: revealTrans, opacity: experienceR.opacity, transform: experienceR.transform },
+      experienceStyle: { background: '#fff', padding: '76px clamp(20px,5vw,64px)', transition: revealTrans, opacity: experienceR.opacity, transform: experienceR.transform },
       storyMain: (() => {
         const c = this.pileContent[st.storyActiveId] || { quote: '후기 텍스트가 들어갈 자리입니다.', author: '회원OO' };
-        return { id: st.storyActiveId, quote: c.quote, author: c.author };
+        return { id: st.storyActiveId, quote: c.quote, author: c.author, imgUrl: (window.BF_IMAGES || {})['pile-img-' + st.storyActiveId] };
       })(),
       storyMainStyle: {
-        display: 'flex', width: this.STORY_MAIN_SIZE.w + 'px', height: this.STORY_MAIN_SIZE.h + 'px', flex: 'none',
+        display: 'flex', flexDirection: st.storyIsMobile ? 'column' : 'row', width: st.storyIsMobile ? '75vw' : this.STORY_MAIN_SIZE.w + 'px', height: st.storyIsMobile ? 'auto' : this.STORY_MAIN_SIZE.h + 'px',
+        aspectRatio: 'auto', flex: 'none',
         borderRadius: '16px', overflow: 'hidden', background: '#fdfaf8', border: '1px solid #f3e9e9',
         boxShadow: '0 20px 40px rgba(43,43,43,.18)', transformStyle: 'preserve-3d', transition: 'transform .15s ease-out, opacity .22s ease',
         transform: `rotateX(${(st.tilt.storyMain || { rx: 0 }).rx}deg) rotateY(${(st.tilt.storyMain || { ry: 0 }).ry}deg)`,
         opacity: st.storyMainFading ? 0 : 1
       },
       storyMainRef: (el) => { if (el) this.storyMainEl = el; },
+      storyMainImageStyle: st.storyIsMobile
+        ? { width: '100%', height: 'auto', aspectRatio: (0.66 * this.STORY_MAIN_SIZE.w) + '/' + this.STORY_MAIN_SIZE.h, flex: 'none', position: 'relative', zIndex: 2 }
+        : { width: '66%', height: '100%', flex: 'none', position: 'relative', zIndex: 2 },
+      storyTextPanelStyle: {
+        flex: '1', padding: '18px', display: 'flex', flexDirection: 'column', justifyContent: 'center', minWidth: 0,
+        position: 'relative', zIndex: 1, background: '#fdfaf8',
+        transform: st.storyTextIn ? (st.storyIsMobile ? 'translateY(0)' : 'translateX(0)') : (st.storyIsMobile ? 'translateY(-100%)' : 'translateX(-100%)'),
+        transition: st.storyTextIn ? 'transform .32s cubic-bezier(.22,.9,.32,1)' : 'none'
+      },
       storyMainOnMove: this.handleTiltMove('storyMain', 8),
       storyMainOnLeave: this.handleTiltLeave('storyMain'),
       storyOuterStyle: {
@@ -772,7 +947,8 @@ class Component extends DCLogic {
       },
       storyStackItems: this.buildStoryStackItems(),
       storyStackWrapStyle: {
-        display: 'flex', flexDirection: st.storyIsMobile ? 'column' : 'row', alignItems: 'center', gap: '10px'
+        display: 'flex', flexDirection: st.storyIsMobile ? 'column' : 'row', alignItems: 'center', gap: '10px',
+        width: st.storyIsMobile ? '100%' : 'auto', minWidth: 0
       },
       storyScrollTrackStyle: st.storyIsMobile
         ? { width: '120px', height: '6px', background: '#f9d7dd', borderRadius: '999px', position: 'relative', flex: 'none' }
@@ -816,6 +992,10 @@ class Component extends DCLogic {
       faqRef: faqR.ref,
       faqStyle: { padding: '76px clamp(20px,5vw,64px)', transition: revealTrans, opacity: faqR.opacity, transform: faqR.transform },
       faqs,
+      faqMoreWrapStyle: { display: faqHasMore ? 'flex' : 'none', justifyContent: 'center', marginTop: '28px' },
+      faqMoreBtnStyle: { display: 'inline-flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' },
+      faqMoreIconStyle: { display: 'inline-block', transition: 'transform .3s ease', transform: st.faqExpanded ? 'rotate(180deg)' : 'rotate(0deg)' },
+      faqToggleExpand: () => this.setState((s) => ({ faqExpanded: !s.faqExpanded })),
       ctaRef: ctaR.ref,
       ctaStyle: { background: '#2b2b2b', color: '#fff', textAlign: 'center', padding: '88px clamp(20px,5vw,64px)', transition: revealTrans, opacity: ctaR.opacity, transform: ctaR.transform }
     };
