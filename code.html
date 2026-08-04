@@ -1,0 +1,553 @@
+<!DOCTYPE html><html lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<style>
+        @layer base {
+            html, body { margin: 0; padding: 0; }
+            body { overscroll-behavior: none; }
+            main > :first-child { margin-top: 0 !important; }
+            main > :last-child { margin-bottom: 0 !important; }
+        }
+        ::-webkit-scrollbar { display: none; }
+    </style>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed": "#efe0cd",
+                        "on-background": "#1d1b16",
+                        "surface-dim": "#dfd9d1",
+                        "outline-variant": "#dac1ba",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-fixed": "#ffdbd0",
+                        "on-tertiary-container": "#594600",
+                        "tertiary": "#735c00",
+                        "surface-variant": "#e7e2d9",
+                        "secondary-container": "#efe0cd",
+                        "on-tertiary-fixed-variant": "#574500",
+                        "on-secondary-container": "#6d6354",
+                        "on-tertiary": "#ffffff",
+                        "primary-fixed-dim": "#ffb59e",
+                        "on-secondary-fixed": "#221a0f",
+                        "on-primary-fixed-variant": "#76321c",
+                        "inverse-primary": "#ffb59e",
+                        "surface": "#fff9f0",
+                        "on-primary-container": "#78331d",
+                        "tertiary-fixed-dim": "#ebc23e",
+                        "background": "#fff9f0",
+                        "primary-container": "#ff9e80",
+                        "on-surface-variant": "#54433e",
+                        "on-primary-fixed": "#3a0b00",
+                        "inverse-on-surface": "#f6f0e7",
+                        "on-secondary-fixed-variant": "#4f4538",
+                        "surface-container-low": "#f9f3ea",
+                        "on-tertiary-fixed": "#241a00",
+                        "on-error": "#ffffff",
+                        "surface-container-high": "#ede7df",
+                        "on-surface": "#1d1b16",
+                        "surface-tint": "#944930",
+                        "surface-container": "#f3ede4",
+                        "surface-bright": "#fff9f0",
+                        "tertiary-fixed": "#ffe087",
+                        "tertiary-container": "#dab32e",
+                        "surface-container-highest": "#e7e2d9",
+                        "secondary-fixed-dim": "#d2c4b2",
+                        "error": "#ba1a1a",
+                        "outline": "#87736d",
+                        "on-secondary": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "secondary": "#675d4e",
+                        "inverse-surface": "#32302a",
+                        "primary": "#944930",
+                        "on-error-container": "#93000a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-lg": "48px",
+                        "unit": "8px",
+                        "container-padding": "24px",
+                        "stack-sm": "12px",
+                        "stack-md": "24px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Pretendard, beVietnamPro"],
+                        "display-lg": ["Pretendard, beVietnamPro"],
+                        "label-sm": ["beVietnamPro"],
+                        "body-lg": ["Pretendard, beVietnamPro"],
+                        "display-lg-mobile": ["Pretendard, beVietnamPro"],
+                        "body-md": ["Pretendard, beVietnamPro"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", { "lineHeight": "1.4", "fontWeight": "600" }],
+                        "display-lg": ["40px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-sm": ["12px", { "lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "display-lg-mobile": ["32px", { "lineHeight": "1.2", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+</head>
+<body class="bg-surface font-body-md text-on-surface antialiased">
+<header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]">
+<div class="h-20 max-w-7xl mx-auto px-container-padding flex items-center justify-between">
+<div class="flex items-center gap-4">
+<img alt="BuddyFit Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDQ_mLQpJW8s64zE7uTGtGlm5Pgm5HU9nWLOO_3tPWF5flTKKnKKT8fVNFPBY07q6rBEMJomz_l8Y7B3LgHenTVfW2zoWHsjP_7jMMH2uk6zKJz17VCZ1UjXWKRgaxlM40_04w_YVPKnFaIr80buJEHG5iWHDuEycpL7RH-rD0NzS_Tq5B9V6zCcnAyZZKBKSoKotizzXhqzoW0fvtpu0ShiEOKZaKGemZYwnnFJcnjpyS3uOLCM4NdEddP46hrJuaa1jdQUfz-aeUlUo">
+
+</div>
+<nav class="hidden lg:flex items-center gap-stack-md" data-active-classes="text-primary font-bold">
+<a aria-current="page" class="transition-colors text-primary font-bold" data-path="home" href="#">Home</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" data-path="about" href="#">About</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" data-path="features" href="#">Features</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" data-path="testimonials" href="#">Testimonials</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" data-path="faq" href="#">FAQ</a>
+</nav>
+<div class="flex items-center gap-stack-sm">
+<button class="hidden md:block font-label-sm text-label-sm text-primary px-stack-md py-2 border border-primary rounded-full hover:bg-primary-fixed transition-all">Login</button>
+<button class="bg-primary text-on-primary font-label-sm text-label-sm px-stack-md py-3 rounded-full shadow-[0_4px_12px_rgba(148,73,48,0.2)] hover:bg-primary-container hover:text-on-primary-container transition-all">Consultation</button>
+<div class="ml-2 w-8 h-8 rounded-full bg-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary text-[18px]">person</span>
+</div>
+</div>
+</div>
+</header>
+<main class="w-full pt-20">
+<div class="flex flex-col w-full">
+<!-- Hero Section -->
+<section class="relative min-h-[90vh] flex items-center overflow-hidden bg-surface">
+<!-- Decorative Ambient Background -->
+<div class="absolute top-0 right-0 w-1/2 h-full opacity-30 pointer-events-none transition-all duration-1000 opacity-100 translate-y-0">
+<svg class="w-full h-full" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+<path d="M42.2,-62.4C54.3,-54.6,63.4,-42.2,71.2,-28.5C79,-14.8,85.5,0.2,82.8,14.1C80.1,28,68.2,40.8,55.1,51.1C42,61.4,27.7,69.2,12.3,71.3C-3.1,73.4,-19.6,69.8,-33.5,61.6C-47.4,53.4,-58.7,40.6,-67.2,26.1C-75.7,11.6,-81.4,-4.6,-78.3,-19.3C-75.2,-34,-63.3,-47.2,-49.5,-54.4C-35.7,-61.6,-20,-62.8,-3.1,-58.5C13.8,-54.2,28.1,-44.4,42.2,-62.4Z" fill="#ffdbd0" transform="translate(400 100)"></path>
+</svg>
+</div>
+<div class="max-w-7xl mx-auto px-container-padding w-full grid grid-cols-1 lg:grid-cols-12 gap-gutter items-center relative z-10 transition-all duration-1000 opacity-100 translate-y-0">
+<div class="lg:col-span-7 flex flex-col items-start gap-stack-md">
+<div class="inline-flex items-center gap-2 px-4 py-2 bg-primary-fixed text-on-primary-fixed-variant rounded-full shadow-sm">
+<span class="material-symbols-outlined text-[18px]">verified_user</span>
+<span class="font-label-sm text-label-sm">PREMIUM MALE-ONLY SERVICE</span>
+</div>
+<h1 class="font-display-lg text-display-lg text-on-surface max-w-xl">
+                            당신의 연애를 도와줄<br>
+                            가장 가까운 여사친, <span class="text-primary">버디핏</span>
+</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-lg">
+                            단순한 매칭을 넘어, 여성의 시선에서 당신의 매력을 발견하고 <br>
+                            가장 완벽한 인연을 찾아주는 맞춤형 연애 컨설턴트.
+                        </p>
+<div class="flex gap-stack-sm mt-stack-sm">
+<button class="px-8 py-4 bg-primary text-on-primary rounded-full font-label-sm text-label-sm shadow-xl hover:translate-y-[-2px] transition-all">무료 상담 신청하기</button>
+<button class="px-8 py-4 bg-surface-container-high text-on-surface rounded-full font-label-sm text-label-sm hover:bg-surface-variant transition-all">서비스 둘러보기</button>
+</div>
+</div>
+<div class="lg:col-span-5 relative">
+<div class="relative w-full aspect-[0.67] rounded-[48px] overflow-hidden shadow-2xl transform rotate-2 hover:rotate-0 transition-transform duration-700">
+<img alt="BuddyFit Lead Manager" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAyhUj_zsXV181Nsi3tVqyxFGgvizXLPm20afmVj0xZWjJGBX65rsR9PXzCqhBYGNJ13r0Y3RbQkXQYJ0KGoi9nmhOXwyVqyxljcAyp-0kWuhe66sByudQHRT2rBZaotnupQoFTkSl-we0CSEH2WY4cQ-KT0xgaSwochyX9M5h43DgGJfqtjOSzk3jKztHvxFjkjMhEYH5ZK0qRC50qPTmQcYrO3YEDwXOH65c6GD2lSH_cuC1RG5XlRA">
+<div class="absolute bottom-8 left-8 right-8 p-6 bg-surface/90 backdrop-blur-md rounded-2xl shadow-lg border border-white/20"><div class="flex items-center gap-2 mb-1"><span class="material-symbols-outlined text-primary text-[18px]">verified</span><p class="font-label-sm text-primary">Lead Manager</p></div><p class="font-headline-md text-on-surface">"진심이 닿는 만남, 제가 직접 도와드릴게요."</p></div>
+</div>
+<!-- Floating badge -->
+<div class="absolute -top-8 -left-8 w-32 h-32 bg-tertiary-fixed text-on-tertiary-fixed-variant rounded-full flex flex-col items-center justify-center p-4 text-center shadow-xl animate-bounce duration-[3000ms]"><span class="font-label-sm text-[10px] uppercase tracking-wider">Matching Rate</span><span class="font-display-lg text-[24px] text-primary">92%</span></div>
+</div>
+</div>
+</section>
+<!-- Verification Process Section -->
+<section class="py-stack-lg bg-surface-container-low">
+<div class="max-w-7xl mx-auto px-container-padding transition-all duration-1000 opacity-100 translate-y-0">
+<div class="flex flex-col items-center text-center mb-16">
+<span class="font-label-sm text-primary tracking-widest uppercase mb-4">Trust &amp; Safety</span>
+<h2 class="font-display-lg text-display-lg text-on-surface">철저한 5단계 검증 프로세스</h2>
+<div class="w-24 h-1 bg-primary-container mt-6 rounded-full"></div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-5 gap-stack-md">
+<div class="group bg-surface p-8 rounded-[32px] flex flex-col items-center text-center shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-2">
+<div class="w-16 h-16 bg-secondary-container text-primary rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[32px]">badge</span>
+</div>
+<p class="font-label-sm text-primary mb-2">Step 01</p>
+<h3 class="font-headline-md text-on-surface mb-3">신원 확인</h3>
+<p class="font-body-md text-on-surface-variant text-sm">본인 명의 기기 및 신분증 대조</p>
+</div>
+<div class="group bg-surface p-8 rounded-[32px] flex flex-col items-center text-center shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-2">
+<div class="w-16 h-16 bg-secondary-container text-primary rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[32px]">school</span>
+</div>
+<p class="font-label-sm text-primary mb-2">Step 02</p>
+<h3 class="font-headline-md text-on-surface mb-3">학력 인증</h3>
+<p class="font-body-md text-on-surface-variant text-sm">최종 학력 증명서 확인</p>
+</div>
+<div class="group bg-surface p-8 rounded-[32px] flex flex-col items-center text-center shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-2">
+<div class="w-16 h-16 bg-secondary-container text-primary rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[32px]">work</span>
+</div>
+<p class="font-label-sm text-primary mb-2">Step 03</p>
+<h3 class="font-headline-md text-on-surface mb-3">직업 검증</h3>
+<p class="font-body-md text-on-surface-variant text-sm">재직 증명 및 소득 증빙</p>
+</div>
+<div class="group bg-surface p-8 rounded-[32px] flex flex-col items-center text-center shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-2">
+<div class="w-16 h-16 bg-secondary-container text-primary rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[32px]">favorite</span>
+</div>
+<p class="font-label-sm text-primary mb-2">Step 04</p>
+<h3 class="font-headline-md text-on-surface mb-3">혼인 여부</h3>
+<p class="font-body-md text-on-surface-variant text-sm">미혼 증명 서류 확인</p>
+</div>
+<div class="group bg-surface p-8 rounded-[32px] flex flex-col items-center text-center shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-2">
+<div class="w-16 h-16 bg-secondary-container text-primary rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[32px]">sentiment_very_satisfied</span>
+</div>
+<p class="font-label-sm text-primary mb-2">Step 05</p>
+<h3 class="font-headline-md text-on-surface mb-3">매너 평가</h3>
+<p class="font-body-md text-on-surface-variant text-sm">심층 면담을 통한 인성 검증</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Concept Section -->
+<section class="py-24 bg-surface overflow-hidden">
+<div class="max-w-7xl mx-auto px-container-padding transition-all duration-1000 opacity-100 translate-y-0">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
+<div class="relative">
+<div class="relative rounded-[40px] overflow-hidden shadow-2xl">
+<img alt="BuddyFit Dating Manager" class="w-full aspect-square object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDLLC1a8g-DCC11gSXThyW4wODHK1ILzP0Uz-DmfpvC6AXuAdJIoyhnWTHJBtpYy1yRZAxtmRMHZmdnoI--aY3M0Ifq8c9iuSP_sOJBl5-mDrvKY7A4cZNaGUUyHrSIZlOVf9m_Ty70wcYhmHvRzfc-tfS_rC1o1-eT4rUJkpdHG4hU-zw5cCUljXd6hmTKyU9TyB0zGhvc44JP87mVvBcqS8xBu-nlt04QInWDPKgDZ8_vMSoC63hXBQ">
+</div>
+
+</div>
+<div class="flex flex-col gap-8">
+<span class="font-label-sm text-primary tracking-widest uppercase">The Manager Concept</span>
+<h2 class="font-display-lg text-display-lg text-on-surface">부담스러운 결정사 대신,<br>센스 있는 '여사친' 매니저</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">
+                                버디핏의 매니저는 단순히 프로필을 전달하는 기계가 아닙니다. 
+                                당신의 장점을 가장 잘 보여줄 수 있는 스타일링부터, 
+                                첫 만남의 어색함을 깨는 대화법까지— 
+                                가장 가까운 친구처럼 세심하게 코칭합니다.
+                            </p>
+<ul class="space-y-4">
+<li class="flex items-start gap-4">
+<span class="material-symbols-outlined text-primary mt-1">check_circle</span>
+<div>
+<h4 class="font-headline-md text-body-lg text-on-surface">1:1 전담 마킹</h4>
+<p class="font-body-md text-on-surface-variant text-sm">상담부터 매칭 후까지 전담 매니저 밀착 케어</p>
+</div>
+</li>
+<li class="flex items-start gap-4">
+<span class="material-symbols-outlined text-primary mt-1">check_circle</span>
+<div>
+<h4 class="font-headline-md text-body-lg text-on-surface">여성 시각의 피드백</h4>
+<p class="font-body-md text-on-surface-variant text-sm">남자가 모르는 디테일한 매력 포인트 발굴</p>
+</div>
+</li>
+<li class="flex items-start gap-4">
+<span class="material-symbols-outlined text-primary mt-1">check_circle</span>
+<div>
+<h4 class="font-headline-md text-body-lg text-on-surface">심리적 안정감</h4>
+<p class="font-body-md text-on-surface-variant text-sm">딱딱한 계약 관계가 아닌 편안한 소통</p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<!-- Matching Process -->
+<section class="py-24 bg-surface-container">
+<div class="max-w-7xl mx-auto px-container-padding transition-all duration-1000 opacity-100 translate-y-0">
+<div class="text-center mb-16">
+<h2 class="font-display-lg text-display-lg text-on-surface">매칭 프로세스</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-8 relative">
+<!-- Connecting Line (Desktop) -->
+<div class="hidden md:block absolute top-1/2 left-0 w-full h-[2px] bg-outline-variant/30 -translate-y-1/2 z-0"></div>
+<div class="relative z-10 flex flex-col items-center text-center group">
+<div class="w-20 h-20 bg-surface rounded-full flex items-center justify-center shadow-lg mb-6 group-hover:bg-primary group-hover:text-on-primary transition-all duration-300">
+<span class="material-symbols-outlined text-[32px]">chat</span>
+</div>
+<span class="font-label-sm text-primary mb-2">01</span>
+<h3 class="font-headline-md text-on-surface mb-3">심층 상담</h3>
+<p class="font-body-md text-on-surface-variant text-sm px-4">이상형과 연애관을 공유하는 첫 단계</p>
+</div>
+<div class="relative z-10 flex flex-col items-center text-center group">
+<div class="w-20 h-20 bg-surface rounded-full flex items-center justify-center shadow-lg mb-6 group-hover:bg-primary group-hover:text-on-primary transition-all duration-300">
+<span class="material-symbols-outlined text-[32px]">psychology</span>
+</div>
+<span class="font-label-sm text-primary mb-2">02</span>
+<h3 class="font-headline-md text-on-surface mb-3">AI 프로필 매칭</h3>
+<p class="font-body-md text-on-surface-variant text-sm px-4">검증된 데이터 기반 최적의 후보 선정</p>
+</div>
+<div class="relative z-10 flex flex-col items-center text-center group">
+<div class="w-20 h-20 bg-surface rounded-full flex items-center justify-center shadow-lg mb-6 group-hover:bg-primary group-hover:text-on-primary transition-all duration-300">
+<span class="material-symbols-outlined text-[32px]">verified</span>
+</div>
+<span class="font-label-sm text-primary mb-2">03</span>
+<h3 class="font-headline-md text-on-surface mb-3">매니저 최종 검토</h3>
+<p class="font-body-md text-on-surface-variant text-sm px-4">기계적 매칭이 아닌 감성적인 최종 셀렉</p>
+</div>
+<div class="relative z-10 flex flex-col items-center text-center group">
+<div class="w-20 h-20 bg-surface rounded-full flex items-center justify-center shadow-lg mb-6 group-hover:bg-primary group-hover:text-on-primary transition-all duration-300">
+<span class="material-symbols-outlined text-[32px]">auto_awesome</span>
+</div>
+<span class="font-label-sm text-primary mb-2">04</span>
+<h3 class="font-headline-md text-on-surface mb-3">애프터 코칭</h3>
+<p class="font-body-md text-on-surface-variant text-sm px-4">만남 후 피드백 및 다음 스텝 가이드</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Core Features Grid -->
+<section class="py-24 bg-surface">
+<div class="max-w-7xl mx-auto px-container-padding transition-all duration-1000 opacity-100 translate-y-0">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<div class="md:col-span-2 bg-primary-fixed p-12 rounded-[40px] flex flex-col justify-between overflow-hidden relative group">
+<div class="relative z-10">
+<span class="font-label-sm text-on-primary-fixed-variant uppercase tracking-widest">Exclusivity</span>
+<h3 class="font-display-lg text-display-lg text-on-primary-fixed-variant mt-4">오직 남성만을 위한<br>프라이빗 서비스</h3>
+<p class="font-body-lg text-on-primary-fixed-variant opacity-80 mt-4 max-w-sm">남성의 자신감을 높이고 성공적인 연애를 위해 최적화된 올인원 솔루션을 제공합니다.</p>
+</div>
+<span class="material-symbols-outlined text-[200px] absolute -right-10 -bottom-10 text-on-primary-fixed-variant/5 group-hover:rotate-12 transition-transform duration-700">male</span>
+</div>
+<div class="bg-surface-container-high p-8 rounded-[40px] flex flex-col gap-6 shadow-sm">
+<div class="w-12 h-12 bg-primary text-on-primary rounded-xl flex items-center justify-center">
+<span class="material-symbols-outlined">analytics</span>
+</div>
+<h3 class="font-headline-md text-on-surface">AI 성향 분석</h3>
+<p class="font-body-md text-on-surface-variant">MBTI와 가치관 데이터를 분석하여 결이 맞는 상대를 90% 이상의 확률로 찾아냅니다.</p>
+</div>
+<div class="bg-secondary-fixed p-8 rounded-[40px] flex flex-col gap-6 shadow-sm">
+<div class="w-12 h-12 bg-secondary text-on-secondary rounded-xl flex items-center justify-center">
+<span class="material-symbols-outlined">check_circle</span>
+</div>
+<h3 class="font-headline-md text-on-secondary-container">100% 실명 인증</h3>
+<p class="font-body-md text-on-secondary-container/80">단 한 명의 유령 회원도 허용하지 않는 철저한 검증으로 신뢰도를 높였습니다.</p>
+</div>
+<div class="md:col-span-2 bg-surface-dim p-12 rounded-[40px] flex items-center gap-12 group">
+<div class="flex-1">
+<h3 class="font-display-lg text-display-lg text-on-surface">무제한 연애 컨설팅</h3>
+<p class="font-body-lg text-on-surface-variant mt-4">매칭이 성사될 때까지, 그리고 그 이후에도 연애 전문가의 조언을 언제든 받아보세요.</p>
+<button class="mt-8 font-label-sm text-primary flex items-center gap-2 group">
+                                    상담 예약하기 <span class="material-symbols-outlined group-hover:translate-x-2 transition-transform">arrow_forward</span>
+</button>
+</div>
+<div class="w-48 h-48 bg-surface rounded-[32px] shadow-inner hidden md:flex items-center justify-center">
+<span class="material-symbols-outlined text-[64px] text-primary animate-pulse">support_agent</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Testimonials -->
+<section class="py-24 bg-surface-container-lowest">
+<div class="max-w-7xl mx-auto px-container-padding transition-all duration-1000 opacity-100 translate-y-0">
+<div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+<div>
+<h2 class="font-display-lg text-display-lg text-on-surface">이미 수많은 분들이<br>버디핏과 함께하고 있습니다.</h2>
+</div>
+<div class="flex gap-4">
+<button class="w-12 h-12 rounded-full border border-outline-variant flex items-center justify-center hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="w-12 h-12 rounded-full border border-outline-variant flex items-center justify-center hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-stack-md">
+<div class="bg-surface p-10 rounded-[32px] shadow-sm border border-outline-variant/10 flex flex-col justify-between h-full hover:shadow-md transition-shadow">
+<div>
+<div class="flex gap-1 mb-6 text-tertiary">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: &quot;FILL&quot; 1;">star</span>
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: &quot;FILL&quot; 1;">star</span>
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: &quot;FILL&quot; 1;">star</span>
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: &quot;FILL&quot; 1;">star</span>
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: &quot;FILL&quot; 1;">star</span>
+</div>
+<p class="font-body-lg text-on-surface mb-8">"바쁜 일상 속에 새로운 사람을 만나기가 정말 힘들었는데, 매니저님이 제 라이프스타일을 배려해 최적의 매칭을 도와주셨어요."</p>
+</div>
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-primary-fixed-dim"></div>
+<p class="font-label-sm text-on-surface-variant">김*현 (32세, IT 개발자)</p>
+</div>
+</div>
+<div class="bg-surface p-10 rounded-[32px] shadow-sm border border-outline-variant/10 flex flex-col justify-between h-full hover:shadow-md transition-shadow">
+<div>
+<div class="flex gap-1 mb-6 text-tertiary">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: &quot;FILL&quot; 1;">star</span>
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: &quot;FILL&quot; 1;">star</span>
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: &quot;FILL&quot; 1;">star</span>
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: &quot;FILL&quot; 1;">star</span>
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: &quot;FILL&quot; 1;">star</span>
+</div>
+<p class="font-body-lg text-on-surface mb-8">"단순히 사진만 보고 결정하는 게 아니라, 성향과 가치관이 맞는 분을 매칭해주셔서 첫 만남부터 대화가 끊이지 않았습니다."</p>
+</div>
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-primary-fixed-dim"></div>
+<p class="font-label-sm text-on-surface-variant">이*우 (29세, 공기업)</p>
+</div>
+</div>
+<div class="bg-surface p-10 rounded-[32px] shadow-sm border border-outline-variant/10 flex flex-col justify-between h-full hover:shadow-md transition-shadow">
+<div>
+<div class="flex gap-1 mb-6 text-tertiary">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: &quot;FILL&quot; 1;">star</span>
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: &quot;FILL&quot; 1;">star</span>
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: &quot;FILL&quot; 1;">star</span>
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: &quot;FILL&quot; 1;">star</span>
+</div>
+<p class="font-body-lg text-on-surface mb-8">"매니저님의 스타일링 조언이 정말 큰 도움이 됐습니다. 덕분에 자신감 있게 첫 데이트에 나갈 수 있었고 지금 좋은 만남 이어가고 있습니다."</p>
+</div>
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-primary-fixed-dim"></div>
+<p class="font-label-sm text-on-surface-variant">박*민 (35세, 전문직)</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Lead Generation Form -->
+<section class="py-24 bg-primary text-on-primary">
+<div class="max-w-5xl mx-auto px-container-padding transition-all duration-1000 opacity-100 translate-y-0">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+<div>
+<h2 class="font-display-lg text-display-lg mb-6">이제 당신의 차례입니다.</h2>
+<p class="font-body-lg opacity-80 mb-12">망설이는 사이 당신의 인연은 지나가고 있을지도 모릅니다. 버디핏과 함께 설레는 만남을 시작해보세요.</p>
+<div class="space-y-6">
+<div class="flex items-center gap-4">
+<span class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center"><span class="material-symbols-outlined">call</span></span>
+<p class="font-body-md">24시간 상담 신청 접수 중</p>
+</div>
+<div class="flex items-center gap-4">
+<span class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center"><span class="material-symbols-outlined">security</span></span>
+<p class="font-body-md">개인정보 철저 보안 유지</p>
+</div>
+</div>
+</div>
+<div class="bg-surface rounded-[40px] p-10 text-on-surface shadow-2xl">
+<form class="flex flex-col gap-6" onsubmit="event.preventDefault(); alert('상담 신청이 완료되었습니다.');">
+<div>
+<label class="font-label-sm block mb-2">이름</label>
+<input class="w-full bg-surface-container-low px-6 py-4 rounded-2xl border-none outline-none focus:ring-2 ring-primary-container transition-all font-body-md" placeholder="성함을 입력해주세요" type="text">
+</div>
+<div>
+<label class="font-label-sm block mb-2">연락처</label>
+<input class="w-full bg-surface-container-low px-6 py-4 rounded-2xl border-none outline-none focus:ring-2 ring-primary-container transition-all font-body-md" placeholder="010-0000-0000" type="tel">
+</div>
+<div>
+<label class="font-label-sm block mb-2">관심사 (최대 3개 선택)</label>
+<div class="flex flex-wrap gap-2 mt-3" id="interest-chips">
+<button class="px-4 py-2 rounded-full bg-surface-container-high font-label-sm text-[12px] transition-colors hover:bg-primary-container" onclick="this.classList.toggle('bg-primary'); this.classList.toggle('text-on-primary'); this.classList.toggle('bg-surface-container-high');" type="button">여행</button>
+<button class="px-4 py-2 rounded-full bg-surface-container-high font-label-sm text-[12px] transition-colors hover:bg-primary-container" onclick="this.classList.toggle('bg-primary'); this.classList.toggle('text-on-primary'); this.classList.toggle('bg-surface-container-high');" type="button">운동</button>
+<button class="px-4 py-2 rounded-full bg-surface-container-high font-label-sm text-[12px] transition-colors hover:bg-primary-container" onclick="this.classList.toggle('bg-primary'); this.classList.toggle('text-on-primary'); this.classList.toggle('bg-surface-container-high');" type="button">맛집</button>
+<button class="px-4 py-2 rounded-full bg-surface-container-high font-label-sm text-[12px] transition-colors hover:bg-primary-container" onclick="this.classList.toggle('bg-primary'); this.classList.toggle('text-on-primary'); this.classList.toggle('bg-surface-container-high');" type="button">독서</button>
+<button class="px-4 py-2 rounded-full bg-surface-container-high font-label-sm text-[12px] transition-colors hover:bg-primary-container" onclick="this.classList.toggle('bg-primary'); this.classList.toggle('text-on-primary'); this.classList.toggle('bg-surface-container-high');" type="button">자기계발</button>
+<button class="px-4 py-2 rounded-full bg-surface-container-high font-label-sm text-[12px] transition-colors hover:bg-primary-container" onclick="this.classList.toggle('bg-primary'); this.classList.toggle('text-on-primary'); this.classList.toggle('bg-surface-container-high');" type="button">반려동물</button>
+<button class="px-4 py-2 rounded-full bg-surface-container-high font-label-sm text-[12px] transition-colors hover:bg-primary-container" onclick="this.classList.toggle('bg-primary'); this.classList.toggle('text-on-primary'); this.classList.toggle('bg-surface-container-high');" type="button">문화생활</button>
+</div>
+</div>
+<button class="w-full py-5 bg-primary text-on-primary rounded-full font-headline-md shadow-lg hover:bg-on-primary-container transition-all mt-4" type="submit">
+                                    무료 컨설팅 신청하기
+                                </button>
+<p class="text-center font-label-sm text-[10px] text-on-surface-variant">신청 시 개인정보 처리방침에 동의하는 것으로 간주됩니다.</p>
+</form>
+</div>
+</div>
+</div>
+</section>
+<!-- Final CTA Bar -->
+<div class="bg-surface-container border-t border-outline-variant/10 py-6">
+<div class="max-w-7xl mx-auto px-container-padding flex flex-col md:flex-row items-center justify-between gap-6">
+<div class="flex items-center gap-4">
+<div class="flex -space-x-3">
+<div class="w-10 h-10 rounded-full border-2 border-surface bg-primary-fixed flex items-center justify-center text-[10px] font-bold">M1</div>
+<div class="w-10 h-10 rounded-full border-2 border-surface bg-primary-fixed flex items-center justify-center text-[10px] font-bold">M2</div>
+<div class="w-10 h-10 rounded-full border-2 border-surface bg-primary-fixed flex items-center justify-center text-[10px] font-bold">M3</div>
+<div class="w-10 h-10 rounded-full border-2 border-surface bg-primary-fixed flex items-center justify-center text-[10px] font-bold">M4</div>
+</div>
+<p class="font-label-sm text-on-surface-variant">지금 이 순간 <strong>124명</strong>의 매니저가 활동 중입니다.</p>
+</div>
+<div class="flex items-center gap-stack-md">
+<span class="font-body-md text-on-surface hidden lg:block">실시간 매칭 상담이 필요하신가요?</span>
+<button class="bg-primary-container text-on-primary-container px-8 py-3 rounded-full font-label-sm shadow-md hover:shadow-lg transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">chat</span>
+                            실시간 카톡 상담
+                        </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<footer class="w-full bg-surface-container-low pt-stack-lg pb-stack-md border-t border-outline-variant/10">
+<div class="max-w-7xl mx-auto px-container-padding">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-stack-lg mb-stack-lg">
+<div>
+<img alt="BuddyFit Logo" class="h-8 w-auto object-contain mb-stack-sm" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCz73udCdnwDE55PUhMOu2aYPWX_3u6jAU5x2fYzlCqTbgBH_XM_Gqd0LHcyEWu-N02BxLuLqH3x7_DTfaG_SPCz42kE2gfHP8hJx1GtON4fn8Nwnwe39tRjVo2FNV1QmDlNeoTVQJbQG9hX-gintQsa_NJXqwtifPieW_mPzOeq7njmlP6JYpSAzOQTLuF5apyebreSBJTU8LCdzYdlnUm6UjErcYYiMaSIcZAsZiUJgF4g_FXROrrip_ja9DHSNODdaXSGRVlGSi0Bqk">
+<p class="font-body-md text-body-md text-on-surface-variant mt-stack-sm">The premium blind dating service for the modern man seeking genuine connection through expert matchmaking.</p>
+</div>
+<div>
+<h4 class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface mb-stack-sm">Connect</h4>
+<ul class="space-y-unit font-body-md text-body-md text-on-surface-variant">
+<li class=""><a class="hover:text-primary" href="#">Instagram</a></li>
+<li class=""><a class="hover:text-primary" href="#">LinkedIn</a></li>
+<li class=""><a class="hover:text-primary" href="#">Contact Support</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface mb-stack-sm">Legal</h4>
+<ul class="space-y-unit font-body-md text-body-md text-on-surface-variant">
+<li class=""><a class="hover:text-primary" href="#">Privacy Policy</a></li>
+<li class=""><a class="hover:text-primary" href="#">Terms of Service</a></li>
+<li class=""><a class="hover:text-primary" href="#">Safety Guidelines</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface mb-stack-sm">Office</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">Gangnam-gu, Seoul<br>South Korea</p>
+</div>
+</div>
+<div class="border-t border-outline-variant/20 pt-stack-md flex flex-col md:flex-row justify-between items-center gap-stack-sm">
+<span class="font-label-sm text-label-sm text-on-surface-variant">© 2024 BuddyFit. All rights reserved.</span>
+<div class="flex gap-stack-md">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px] cursor-pointer hover:text-primary">share</span>
+<span class="material-symbols-outlined text-on-surface-variant text-[20px] cursor-pointer hover:text-primary">mail</span>
+</div>
+</div>
+</div>
+</footer>
+<script>
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100', 'translate-y-0');
+                    entry.target.classList.remove('opacity-0', 'translate-y-10');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section > div').forEach(el => {
+            el.classList.add('transition-all', 'duration-1000', 'opacity-0', 'translate-y-10');
+            observer.observe(el);
+        });
+    </script>
+
+
+
+
+
+
+
+
+</body></html>
