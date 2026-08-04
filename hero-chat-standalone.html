@@ -43,6 +43,51 @@
       box-shadow: 0 10px 30px rgba(43, 43, 43, 0.18);
     }
 
+    .screen {
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .home-header {
+      flex: none;
+      padding: 16px;
+      background: var(--accent);
+    }
+
+    .home-title { color: #fff; font-size: 17px; font-weight: 700; }
+
+    .manager-list {
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .manager-row {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border: 0;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      color: inherit;
+      background: transparent;
+      text-align: left;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+
+    .manager-row:hover { background: rgba(0, 0, 0, 0.04); }
+    .manager-row .avatar { width: 48px; height: 48px; flex: none; }
+    .manager-info { flex: 1; min-width: 0; }
+    .manager-row-name { display: block; color: var(--text); font-size: 14.5px; font-weight: 700; }
+    .manager-preview { display: block; margin-top: 2px; overflow: hidden; color: #8c8178; font-size: 12px; white-space: nowrap; text-overflow: ellipsis; }
+    .manager-chevron { flex: none; }
+
     .chat-header {
       flex: none;
       display: flex;
@@ -221,8 +266,50 @@
 </head>
 <body>
   <main class="chat-widget" aria-label="버디핏 상담 미리보기">
+    <section class="screen" id="homeScreen">
+      <header class="home-header">
+        <div class="home-title">buddyfit</div>
+      </header>
+      <div class="manager-list" id="managerList">
+        <!-- 각 매니저 이미지 경로를 data-image에 입력하세요. -->
+        <button class="manager-row" type="button" data-name="O O 매니저" data-image="">
+          <img class="avatar" src="" alt="매니저 프로필">
+          <span class="manager-info">
+            <span class="manager-row-name">O O 매니저</span>
+            <span class="manager-preview">탭하여 대화를 시작해보세요</span>
+          </span>
+          <svg class="manager-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c9c2b8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 6 15 12 9 18"></polyline></svg>
+        </button>
+        <button class="manager-row" type="button" data-name="O O 매니저" data-image="">
+          <img class="avatar" src="" alt="매니저 프로필">
+          <span class="manager-info">
+            <span class="manager-row-name">O O 매니저</span>
+            <span class="manager-preview">탭하여 대화를 시작해보세요</span>
+          </span>
+          <svg class="manager-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c9c2b8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 6 15 12 9 18"></polyline></svg>
+        </button>
+        <button class="manager-row" type="button" data-name="O O 팀장" data-image="">
+          <img class="avatar" src="" alt="매니저 프로필">
+          <span class="manager-info">
+            <span class="manager-row-name">O O 팀장</span>
+            <span class="manager-preview">탭하여 대화를 시작해보세요</span>
+          </span>
+          <svg class="manager-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c9c2b8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 6 15 12 9 18"></polyline></svg>
+        </button>
+        <button class="manager-row" type="button" data-name="O O 매니저" data-image="">
+          <img class="avatar" src="" alt="매니저 프로필">
+          <span class="manager-info">
+            <span class="manager-row-name">O O 매니저</span>
+            <span class="manager-preview">탭하여 대화를 시작해보세요</span>
+          </span>
+          <svg class="manager-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c9c2b8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 6 15 12 9 18"></polyline></svg>
+        </button>
+      </div>
+    </section>
+
+    <section class="screen hidden" id="chatScreen">
     <header class="chat-header">
-      <button class="icon-button" type="button" aria-label="뒤로 가기">←</button>
+      <button class="icon-button" id="backToHome" type="button" aria-label="매니저 목록으로 돌아가기">←</button>
       <div class="avatar-wrap">
         <!-- 원하는 이미지 경로를 src에 입력하세요. -->
         <img class="avatar manager-image" src="" alt="매니저 프로필">
@@ -274,6 +361,7 @@
         </svg>
       </button>
     </footer>
+    </section>
   </main>
 
   <script>
@@ -283,6 +371,8 @@
     };
 
     const messages = document.getElementById("chatMessages");
+    const homeScreen = document.getElementById("homeScreen");
+    const chatScreen = document.getElementById("chatScreen");
     const firstMessage = document.getElementById("firstMessage");
     const typingIndicator = document.getElementById("typingIndicator");
     const managerMessage = document.getElementById("managerMessage");
@@ -339,6 +429,21 @@
       timers.push(setTimeout(() => show(chatChips), 3200));
     }
 
+    function openChat(managerRow) {
+      chat.managerName = managerRow.dataset.name;
+      chat.managerImage = managerRow.dataset.image;
+      setContent();
+      homeScreen.classList.add("hidden");
+      chatScreen.classList.remove("hidden");
+      restartChat();
+    }
+
+    function openHome() {
+      clearTimers();
+      chatScreen.classList.add("hidden");
+      homeScreen.classList.remove("hidden");
+    }
+
     function selectChip(button) {
       chatChips.classList.add("hidden");
       const time = currentTime();
@@ -364,13 +469,17 @@
     }
 
     document.getElementById("resetChat").addEventListener("click", restartChat);
+    document.getElementById("backToHome").addEventListener("click", openHome);
+    document.getElementById("managerList").addEventListener("click", (event) => {
+      const managerRow = event.target.closest(".manager-row");
+      if (managerRow) openChat(managerRow);
+    });
     chatChips.addEventListener("click", (event) => {
       const button = event.target.closest(".chip");
       if (button) selectChip(button);
     });
 
     setContent();
-    restartChat();
   </script>
 </body>
 </html>
