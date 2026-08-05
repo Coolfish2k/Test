@@ -1,0 +1,756 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buddyfit Hero Chat UI</title>
+  <style>
+    :root {
+      --accent: #b24930;
+      --accent-hover: #d8465a;
+      --user-bubble: #cfe9f7;
+      --manager-bubble: #f5ecdd;
+      --text: #2b2b2b;
+      --muted: #a0927e;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      background: transparent;
+      color: var(--text);
+      font-family: "Noto Sans KR", "Apple SD Gothic Neo", sans-serif;
+    }
+
+    button { font: inherit; }
+
+    .chat-widget {
+      box-shadow: 4px 4px 16px rgba(0, 0, 0, 0.33);
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      background: #fff;
+      border: solid #f9f3ea 3px;
+      border-radius: 16px;
+      position: relative;
+      transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .chat-widget.is-collapsed {
+      background: transparent;
+      border-color: transparent;
+      box-shadow: none;
+    }
+
+    .chat-widget.is-collapsed .dynamic-island { opacity: 0; }
+
+    .dynamic-island {
+      position: absolute;
+      top: 0px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90px;
+      height: 14px;
+      background: #0a0a0a;
+      border-radius: 0 0 24px 24px;
+      z-index: 10;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .screen {
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    #homeScreen { position: relative; }
+
+    .home-header {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 6;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 0;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: none;
+      cursor: pointer;
+      transition: bottom 0.4s ease, border-radius 0.4s ease;
+    }
+
+    .home-header.is-open {
+      bottom: calc(100% - 56px);
+      border: solid #f9f3ea 3px;
+      border-bottom: 0;
+      border-radius: 13px 13px 0 0;
+      justify-content: flex-start;
+      padding-left: 16px;
+      gap: 8px;
+    }
+
+    .home-title { display: none; color: #fff; font-size: 17px; font-weight: 800; letter-spacing: -0.2px; }
+    .home-header.is-open .home-title { display: inline-block; }
+
+    .home-header-arrow {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      transition: transform 0.3s ease;
+      pointer-events: none;
+    }
+
+    .home-header.is-open .home-header-arrow { transform: translateY(-50%) rotate(180deg); }
+
+    .home-subtitle { color: rgba(255, 255, 255, 0.9); font-size: 12.5px; font-weight: 600; }
+
+    .header-avatar-stack {
+      position: absolute;
+      bottom: 68px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 6;
+      display: flex;
+      align-items: center;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .header-avatar-stack.is-hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateX(-50%) translateY(8px);
+    }
+
+    .header-avatar-stack img {
+      width: 66px;
+      height: 66px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: linear-gradient(135deg, var(--accent-hover), var(--accent));
+      border: 2px solid #fff;
+      margin-left: -10px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .header-avatar-stack img:first-child { margin-left: 0; }
+    .header-avatar-stack img:nth-child(1) { z-index: 4; border-color: rgba(255, 255, 255, 1); }
+    .header-avatar-stack img:nth-child(2) { z-index: 3; border-color: rgba(255, 255, 255, 0.8); }
+    .header-avatar-stack img:nth-child(3) { z-index: 2; border-color: rgba(255, 255, 255, 0.6); }
+    .header-avatar-stack img:nth-child(4) { z-index: 1; border-color: rgba(255, 255, 255, 0.3); }
+
+    .call-cta-note {
+      flex: none;
+      color: var(--muted);
+      font-size: 9px;
+    }
+
+    .home-content {
+      position: absolute;
+      inset: 0;
+      padding-top: 56px;
+      display: none;
+      flex-direction: column;
+      min-height: 0;
+    }
+
+    .home-content.is-visible { display: flex; }
+
+    .search-bar {
+      flex: none;
+      margin: 10px 16px 2px;
+      padding: 7px 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      border-radius: 10px;
+      background: rgba(0, 0, 0, 0.05);
+      color: #b3a89a;
+      font-size: 12.5px;
+    }
+
+    .search-bar svg { flex: none; }
+
+    .section-label {
+      flex: none;
+      padding: 14px 16px 4px;
+      color: #a89a89;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+    }
+
+    .call-cta {
+      flex: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 2px 12px 4px;
+      padding: 10px 12px;
+      border: 2px dashed var(--accent);
+      border-radius: 12px;
+      background: rgba(178, 73, 48, 0.05);
+      color: inherit;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .call-cta:hover { background: rgba(178, 73, 48, 0.1); }
+
+    .call-cta-icon {
+      flex: none;
+      width: 50px;
+      height: 50px;
+      display: grid;
+      place-items: center;
+      object-fit: cover;
+    }
+
+    .call-cta-text { font-size: 13.5px; font-weight: 700; color: var(--text); }
+
+    .manager-body { flex: 1; min-height: 0; display: flex; padding: 2px 12px 12px; }
+
+    .manager-list {
+      flex: 1;
+      min-width: 0;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06);
+    }
+
+    .manager-list .manager-row:last-child { border-bottom: 0; }
+
+    .index-rail {
+      flex: none;
+      width: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      padding: 4px 0;
+      color: var(--muted);
+      font-size: 8px;
+    }
+
+    .manager-row {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 16px;
+      border: 0;
+      color: inherit;
+      background: transparent;
+      background-image: linear-gradient(rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.06));
+      background-repeat: no-repeat;
+      background-position: bottom 0 left 60px;
+      background-size: calc(100% - 60px) 1px;
+      text-align: left;
+      transition: background-color 0.15s ease;
+    }
+
+    .manager-row:hover { background-color: rgba(0, 0, 0, 0.04); }
+    .manager-row .avatar { width: 34px; height: 34px; flex: none; }
+    .manager-row .avatar-fallback {
+      border-radius: 50%;
+      object-fit: cover;
+      background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+    }
+    .manager-info { flex: 1; min-width: 0; cursor: pointer; background: none; border: 0; padding: 0; text-align: left; color: inherit; font: inherit; }
+    .manager-row-name { display: block; color: var(--text); font-size: 13px; font-weight: 600; }
+    .manager-preview { display: block; margin-top: 1px; overflow: hidden; color: #8c8178; font-size: 10px; white-space: nowrap; text-overflow: ellipsis; }
+    .manager-actions { flex: none; display: flex; gap: 6px; }
+
+    .action-button {
+      width: 26px;
+      height: 26px;
+      display: grid;
+      place-items: center;
+      border: 1.5px solid var(--accent);
+      border-radius: 50%;
+      color: var(--accent);
+      background: #fff;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .action-button:hover { color: #fff; background: var(--accent); }
+
+    .chat-header {
+      flex: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      background: var(--accent);
+    }
+
+    .icon-button {
+      flex: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 0;
+      padding: 4px 6px;
+      color: #fff;
+      background: transparent;
+      font-size: 20px;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .reset-button { color: rgba(255, 255, 255, 0.85); font-size: 18px; }
+
+    .avatar-wrap { position: relative; flex: none; width: 38px; height: 38px; }
+
+    .avatar {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      background: rgba(255, 255, 255, 0.22);
+    }
+
+    .avatar-small { width: 30px; height: 30px; flex: none; }
+
+    .online-dot {
+      position: absolute;
+      right: 1px;
+      bottom: 1px;
+      width: 10px;
+      height: 10px;
+      border: 2px solid var(--accent);
+      border-radius: 50%;
+      background: #4ade80;
+    }
+
+    .header-info { flex: 1; min-width: 0; }
+    .header-name { color: #fff; font-size: 14px; font-weight: 700; line-height: 1.2; }
+
+    .chat-messages {
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 16px 12px;
+      scroll-behavior: smooth;
+    }
+
+    .chat-messages::-webkit-scrollbar { width: 6px; }
+    .chat-messages::-webkit-scrollbar-track { background: transparent; }
+    .chat-messages::-webkit-scrollbar-thumb { border-radius: 3px; background: rgba(0, 0, 0, 0.35); }
+
+    .qa-note {
+      align-self: center;
+      margin: 4px 0 8px;
+      padding: 3px 10px;
+      border-radius: 10px;
+      color: var(--muted);
+      background: rgba(0, 0, 0, 0.06);
+      font-size: 11px;
+      text-align: center;
+    }
+
+    .message { display: flex; flex-direction: column; gap: 2px; animation: appear 0.25s ease both; }
+    .message-user { align-items: flex-end; }
+    .message-manager { flex-direction: row; align-items: flex-start; gap: 6px; }
+    .message-column { display: flex; flex-direction: column; gap: 2px; }
+    .manager-name { margin: 0 0 2px 2px; color: #7a6a5a; font-size: 11px; }
+
+    .bubble {
+      max-width: 78%;
+      padding: 9px 13px;
+      font-size: 13px;
+      line-height: 1.55;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    .bubble-user { border-radius: 16px 4px 16px 16px; color: #2b3b45; background: var(--user-bubble); }
+    .bubble-manager { border-radius: 4px 16px 16px 16px; color: #4a3f30; background: var(--manager-bubble); }
+    .timestamp { margin: 0 2px; color: var(--muted); font-size: 10px; }
+
+    .typing-row { display: flex; align-items: flex-end; gap: 6px; animation: appear 0.2s ease both; }
+    .typing-dots { display: flex; gap: 4px; padding: 10px 14px; border-radius: 16px; background: var(--manager-bubble); }
+    .typing-dots span { width: 7px; height: 7px; border-radius: 50%; background: #bbb; animation: typing 1.2s ease-in-out infinite; }
+    .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 6px;
+      margin-top: 4px;
+      animation: appear 0.25s ease both;
+    }
+
+    .chip {
+      border: 1.5px solid var(--accent);
+      border-radius: 20px;
+      padding: 7px 13px;
+      color: var(--accent);
+      background: #fff;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .chip:hover { color: #fff; background: var(--accent); }
+    .chip:focus-visible, .icon-button:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+
+    .input-bar {
+      flex: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      border-top: 1px solid rgba(0, 0, 0, 0.06);
+      background: #f0ebe3;
+    }
+
+    .input-placeholder {
+      flex: 1;
+      padding: 8px 14px;
+      border-radius: 20px;
+      color: #bbb;
+      background: #fff;
+      font-size: 13px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+    }
+
+    .send-button {
+      flex: none;
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border: 0;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    .hidden { display: none !important; }
+
+    @keyframes typing {
+      0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
+      30% { transform: translateY(-4px); opacity: 1; }
+    }
+
+    @keyframes appear {
+      from { transform: translateY(5px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="chat-widget is-collapsed" id="chatWidget" aria-label="버디핏 상담 미리보기">
+    <div class="dynamic-island" aria-hidden="true"></div>
+    <section class="screen" id="homeScreen">
+      <div class="header-avatar-stack" id="headerAvatarStack" aria-hidden="true"></div>
+      <button type="button" class="home-header" id="homeHeaderToggle">
+        <span class="home-title">매니저</span>
+        <div class="home-subtitle">매니저를 미리 만나보세요!</div>
+        <svg class="home-header-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 15 12 9 18 15"></polyline></svg>
+      </button>
+      <div class="home-content" id="homeContent">
+      <div class="search-bar">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <span>검색 </span>
+      </div>
+      <div class="section-label">전화 상담</div>
+      <button class="call-cta" type="button" id="liveCallRow" data-name="OO매니저" data-image="">
+        <img class="call-cta-icon" src="https://github.com/Coolfish2k/Test/blob/main/buddyFitChar.png?raw=true" alt="" aria-hidden="true">
+        <div style="display:flex; flex-direction: column;"
+          <span class="call-cta-text">상담 신청</span>
+          <span class="manager-preview">누르면 신청 페이지로 연결됩니다.</span>
+      </div>
+      </button>
+      <div class="section-label">매니저 목록<br><div class="call-cta-note">실제 매니저와의 대화를 미리 만나보세요↓</div></div>
+      <div class="manager-body">
+        <div class="manager-list" id="managerList">
+          <!-- 각 매니저 이미지 경로를 data-image에 입력하세요. -->
+          <div class="manager-row" data-name="최하하 매니저" data-image="">
+            <img class="avatar avatar-fallback" src="https://github.com/Coolfish2k/Test/blob/main/p2.png?raw=true" alt="최하하 매니저" aria-hidden="true">
+            <button class="manager-info" type="button">
+              <span class="manager-row-name">최하하 매니저</span>
+              <span class="manager-preview">ㅎㅇ</span>
+            </button>
+            <span class="manager-actions">
+              <button class="action-button" type="button" aria-label="전화 걸기">📞</button>
+              <button class="action-button chat-action" type="button" aria-label="채팅 시작">💬</button>
+            </span>
+          </div>
+          <div class="manager-row" data-name="나친구 매니저" data-image="">
+            <img class="avatar avatar-fallback" src="https://github.com/Coolfish2k/Test/blob/main/p1.png?raw=true" alt="나친구 매니저" aria-hidden="true">
+            <button class="manager-info" type="button">
+              <span class="manager-row-name">나친구 매니저</span>
+              <span class="manager-preview">안뇽</span>
+            </button>
+            <span class="manager-actions">
+              <button class="action-button" type="button" aria-label="전화 걸기">📞</button>
+              <button class="action-button chat-action" type="button" aria-label="채팅 시작">💬</button>
+            </span>
+          </div>
+          <div class="manager-row" data-name="이버디 매니저" data-image="">
+            <img class="avatar avatar-fallback" src="https://github.com/Coolfish2k/Test/blob/main/p3.png?raw=true" alt="이버디 매니저" aria-hidden="true">
+            <button class="manager-info" type="button">
+              <span class="manager-row-name">이버디 매니저</span>
+              <span class="manager-preview">친근한 첫인사말(첫인상)</span>
+            </button>
+            <span class="manager-actions">
+              <button class="action-button" type="button" aria-label="전화 걸기">📞</button>
+              <button class="action-button chat-action" type="button" aria-label="채팅 시작">💬</button>
+            </span>
+          </div>
+          <span class="manager-preview" style="text-align:center;">상담 신청 시 더 많은 매니저가 기다리고 있어요!</span>
+        </div>
+      </div>
+      </div>
+    </section>
+
+    <section class="screen hidden" id="chatScreen">
+    <header class="chat-header">
+      <button class="icon-button" id="backToHome" type="button" aria-label="매니저 목록으로 돌아가기">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M12.5 4L7 10L12.5 16" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="avatar-wrap">
+        <!-- 원하는 이미지 경로를 src에 입력하세요. -->
+        <img class="avatar manager-image" src="" alt="매니저 프로필">
+        <span class="online-dot" aria-hidden="true"></span>
+      </div>
+      <div class="header-info">
+        <div class="header-name manager-name-text">O O 매니저</div>
+      </div>
+      <button class="icon-button reset-button" id="resetChat" type="button" aria-label="대화 다시 보기">↺</button>
+    </header>
+
+    <section class="chat-messages" id="chatMessages" aria-live="polite">
+      <div class="qa-note">선택한 매니저가 직접 작성한 질답 입니다.</div>
+
+      <div class="message message-user hidden" id="firstMessage">
+        <div class="bubble bubble-user">소개팅 잘하고 싶은데 뭐부터 해야 할지 모르겠어요</div>
+        <div class="timestamp current-time"></div>
+      </div>
+
+      <div class="typing-row hidden" id="typingIndicator">
+        <img class="avatar avatar-small manager-image" src="" alt="">
+        <div class="typing-dots" aria-label="매니저가 입력 중">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+
+      <div class="message message-manager hidden" id="managerMessage">
+        <img class="avatar avatar-small manager-image" src="" alt="">
+        <div class="message-column">
+          <div class="manager-name manager-name-text">O O 매니저</div>
+          <div class="bubble bubble-manager">그 마음이 제일 중요해요. 우선 첫인상부터 같이 점검해볼까요?</div>
+          <div class="timestamp current-time"></div>
+        </div>
+      </div>
+
+      <div class="chips hidden" id="chatChips" aria-label="답변 선택">
+        <button class="chip" type="button" data-reply="과하지 않게, 깔끔한 인상을 주는 코디부터 같이 봐드릴게요.">코디가 걱정돼요</button>
+        <button class="chip" type="button" data-reply="자연스러운 대화 흐름은 연습으로 충분히 늘어요. 예시부터 드려볼게요.">대화가 어려워요</button>
+        <button class="chip" type="button" data-reply="본인은 못 보는 매력, 여성의 시선으로 솔직하게 짚어드릴게요.">제 매력을 모르겠어요</button>
+      </div>
+    </section>
+
+    <!-- <footer class="input-bar">
+      <div class="input-placeholder">실제 상담에서는 자유롭게 대화할 수 있어요</div>
+      <button class="send-button" type="button" aria-label="메시지 보내기">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="22" y1="2" x2="11" y2="13"></line>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+        </svg>
+      </button>
+    </footer> -->
+    </section>
+  </main>
+
+  <script>
+    const chat = {
+      managerName: "O O 매니저",
+      managerImage: "" // 여기에 이미지 경로 또는 URL을 입력하세요.
+    };
+
+    const firstReplyByManager = {
+      "최하하 매니저": "ㅋㅋㅋ 뭘 그런걸 걱정함 내가 봐주께 뭐가 문젠데?",
+      "나친구 매니저": "엥 오빠 또 뭐가 걱정이야",
+      "이버디 매니저": "누나만 믿고 따라와 그래서 뭐봐줄까?"
+    };
+
+    const messages = document.getElementById("chatMessages");
+    const homeScreen = document.getElementById("homeScreen");
+    const chatScreen = document.getElementById("chatScreen");
+    const firstMessage = document.getElementById("firstMessage");
+    const typingIndicator = document.getElementById("typingIndicator");
+    const managerMessage = document.getElementById("managerMessage");
+    const managerMessageBubble = managerMessage.querySelector(".bubble-manager");
+    const managerMessageDefaultText = managerMessageBubble.textContent;
+    const chatChips = document.getElementById("chatChips");
+    const timers = [];
+
+    function setContent() {
+      document.querySelectorAll(".manager-name-text").forEach((element) => {
+        element.textContent = chat.managerName;
+      });
+      document.querySelectorAll(".manager-image").forEach((image) => {
+        image.src = chat.managerImage;
+      });
+    }
+
+    function currentTime() {
+      return new Intl.DateTimeFormat("ko-KR", {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false
+      }).format(new Date());
+    }
+
+    function updateTimes(includeReadMark = true) {
+      document.querySelectorAll(".current-time").forEach((element, index) => {
+        element.textContent = currentTime() + (includeReadMark && index === 0 ? " ✓✓" : "");
+      });
+    }
+
+    function show(element) {
+      element.classList.remove("hidden");
+      requestAnimationFrame(() => { messages.scrollTop = messages.scrollHeight; });
+    }
+
+    function clearTimers() {
+      while (timers.length) clearTimeout(timers.pop());
+    }
+
+    function removeReplies() {
+      messages.querySelectorAll(".generated-reply").forEach((element) => element.remove());
+    }
+
+    function restartChat() {
+      clearTimers();
+      removeReplies();
+      [firstMessage, typingIndicator, managerMessage, chatChips].forEach((element) => element.classList.add("hidden"));
+      managerMessageBubble.textContent = firstReplyByManager[chat.managerName] || managerMessageDefaultText;
+      updateTimes();
+      timers.push(setTimeout(() => show(firstMessage), 600));
+      timers.push(setTimeout(() => show(typingIndicator), 1400));
+      timers.push(setTimeout(() => {
+        typingIndicator.classList.add("hidden");
+        show(managerMessage);
+      }, 2600));
+      timers.push(setTimeout(() => show(chatChips), 3200));
+    }
+
+    function openChat(managerRow) {
+      const avatar = managerRow.querySelector(".avatar");
+      chat.managerName = managerRow.dataset.name;
+      chat.managerImage = (avatar && avatar.src) || managerRow.dataset.image;
+      setContent();
+      homeScreen.classList.add("hidden");
+      chatScreen.classList.remove("hidden");
+      restartChat();
+    }
+
+    function openHome() {
+      clearTimers();
+      chatScreen.classList.add("hidden");
+      homeScreen.classList.remove("hidden");
+    }
+
+    function selectChip(button) {
+      chatChips.classList.add("hidden");
+      const time = currentTime();
+      const fragment = document.createRange().createContextualFragment(`
+        <div class="message message-user generated-reply">
+          <div class="bubble bubble-user"></div>
+          <div class="timestamp">${time} ✓✓</div>
+        </div>
+        <div class="message message-manager generated-reply">
+          <img class="avatar avatar-small" src="${chat.managerImage}" alt="">
+          <div class="message-column">
+            <div class="manager-name">${chat.managerName}</div>
+            <div class="bubble bubble-manager"></div>
+            <div class="timestamp">${time}</div>
+          </div>
+        </div>
+        <div class="chips generated-reply">
+          <button class="chip" type="button">이 매니저에게 실시간 답변받기</button>
+           <button class="chip" type="button">다른 매니저 살펴보기</button>
+        </div>
+      `);
+      const replyNodes = fragment.querySelectorAll(".bubble");
+      replyNodes[0].textContent = button.textContent;
+      replyNodes[1].textContent = button.dataset.reply;
+      messages.append(fragment);
+      messages.scrollTop = messages.scrollHeight;
+    }
+
+    function populateHeaderAvatarStack() {
+      const stack = document.getElementById("headerAvatarStack");
+      const avatars = document.querySelectorAll("#managerList .manager-row .avatar");
+      avatars.forEach((avatar, index) => {
+        if (index >= 4) return;
+        const img = document.createElement("img");
+        img.src = avatar.src;
+        img.alt = avatar.alt;
+        stack.appendChild(img);
+      });
+    }
+
+    populateHeaderAvatarStack();
+
+    document.getElementById("homeHeaderToggle").addEventListener("click", (event) => {
+      event.currentTarget.classList.toggle("is-open");
+      document.getElementById("homeContent").classList.toggle("is-visible");
+      document.getElementById("chatWidget").classList.toggle("is-collapsed");
+      document.getElementById("headerAvatarStack").classList.toggle("is-hidden");
+    });
+    document.getElementById("resetChat").addEventListener("click", restartChat);
+    document.getElementById("backToHome").addEventListener("click", openHome);
+    document.getElementById("liveCallRow").addEventListener("click", (event) => {
+      openChat(event.currentTarget);
+    });
+    document.getElementById("managerList").addEventListener("click", (event) => {
+      if (event.target.closest(".action-button:not(.chat-action)")) return;
+      const managerRow = event.target.closest(".manager-row");
+      if (managerRow) openChat(managerRow);
+    });
+    chatChips.addEventListener("click", (event) => {
+      const button = event.target.closest(".chip");
+      if (button) selectChip(button);
+    });
+
+    setContent();
+  </script>
+</body>
+</html>
