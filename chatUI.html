@@ -485,14 +485,14 @@
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
         <span>검색 </span>
       </div>
-      <div class="section-label">전화 상담</div>
+      <!-- <div class="section-label">전화 상담</div>
       <button class="call-cta" type="button" id="liveCallRow" data-name="OO매니저" data-image="">
         <img class="call-cta-icon" src="https://github.com/Coolfish2k/Test/blob/main/buddyFitChar.png?raw=true" alt="" aria-hidden="true">
         <a href="#apply-form"><div style="display:flex; flex-direction: column;">
           <span class="call-cta-text">상담 신청</span>
           <span class="manager-preview">누르면 신청 페이지로 연결됩니다.</span>
       </div></a>
-      </button>
+      </button> -->
       <div class="section-label">매니저 목록<br><div class="call-cta-note">실제 매니저와의 대화를 미리 만나보세요↓</div></div>
       <div class="manager-body">
         <div class="manager-list" id="managerList">
@@ -530,7 +530,7 @@
               <button class="action-button chat-action" type="button" aria-label="채팅 시작">💬</button>
             </span>
           </div>
-          <span class="manager-preview" style="text-align:center;">상담 신청 시 더 많은 매니저가 기다리고 있어요!</span>
+          <span class="manager-preview" style="text-align:center;"><br>상담 신청 시 더 많은 매니저가 기다리고 있어요!</span>
         </div>
       </div>
       </div>
@@ -704,13 +704,13 @@
           </div>
         </div>
         <div class="chips generated-reply">
-          <button class="chip" type="button">이 매니저에게 실시간 답변받기</button>
-           <button class="chip" type="button">다른 매니저 살펴보기</button>
+           <button class="chip back-to-home-chip" type="button">다른 매니저 살펴보기</button>
         </div>
       `);
       const replyNodes = fragment.querySelectorAll(".bubble");
       replyNodes[0].textContent = button.textContent;
       replyNodes[1].textContent = button.dataset.reply;
+      fragment.querySelector(".back-to-home-chip").addEventListener("click", openHome);
       messages.append(fragment);
       messages.scrollTop = messages.scrollHeight;
     }
